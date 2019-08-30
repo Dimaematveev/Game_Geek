@@ -8,7 +8,7 @@ namespace Game.BL.Model
 {
     public class User
     {
-        private string Name {get; }
+        private string UserName {get; }
         private int Count { get; set; }
 
         public User(string name)
@@ -18,9 +18,11 @@ namespace Game.BL.Model
                 throw new ArgumentNullException("Имя пользователя не может быть пустым!!", nameof(name));
             }
 
-            Name = name;
+            UserName = name;
             Count = 200;
         }
+
+
 
     }
 }

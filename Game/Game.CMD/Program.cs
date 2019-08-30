@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Game.CMD.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,6 +11,12 @@ namespace Game.CMD
     {
         static void Main(string[] args)
         {
+            UserCMD user = new UserCMD("Dima");
+
+            LocationCMD location = new LocationCMD("Loc1", user);
+
+
+            Console.ReadLine();
         }
     }
 }
