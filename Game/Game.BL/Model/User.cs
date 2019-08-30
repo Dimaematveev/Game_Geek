@@ -8,8 +8,8 @@ namespace Game.BL.Model
 {
     public class User
     {
-        private string UserName {get; }
-        private int Count { get; set; }
+        protected string UserName {get; }
+        protected int Money { get; set; }
 
         public User(string name)
         {
@@ -19,7 +19,7 @@ namespace Game.BL.Model
             }
 
             UserName = name;
-            Count = 200;
+            Money = 200;
         }
 
 

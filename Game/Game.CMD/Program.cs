@@ -14,7 +14,8 @@ namespace Game.CMD
             UserCMD user = new UserCMD("Dima");
 
             LocationCMD location = new LocationCMD("Loc1", user);
-
+            user.ToConsole();
+            location.ToConsole();
 
             Console.ReadLine();
         }

@@ -16,7 +16,7 @@ namespace Game.CMD.Model
 
         public void ToConsole()
         {
-            throw new NotImplementedException();
+            Console.WriteLine($"Вы находитесь на локации {LocationName}.");
         }
     }
 }
