@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace Game.CMD.Model
 {
-    class GameCMD : Location, IConsole
+    class LocationCMD : Location, IConsole
     {
-        public GameCMD(User user) : base(user)
+        public LocationCMD(User user) : base(user)
         {
         }
 
