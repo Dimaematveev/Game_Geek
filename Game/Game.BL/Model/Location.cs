@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace Game.BL.Model
 {
-    public class Game
+    public class Location
     {
        
         private User User { get; }
 
-        public Game(User user)
+        public Location(User user)
         {
             if (user==null)
             {
