@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace Game.CMD.Interface
 {
-    public interface IConsoleOutput
+    public interface IConsole
     {
+        void ToConsole();
     }
 }
