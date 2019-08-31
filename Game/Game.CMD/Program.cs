@@ -1,4 +1,5 @@
 ﻿using Game.CMD.Model;
+using Game.CMD.Model.UsersOptionsCMD;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,7 @@ namespace Game.CMD
     {
         static void Main(string[] args)
         {
-            UserCMD user = new UserCMD("Dima");
+            PlayerCMD user = new PlayerCMD("Dima");
 
             LocationCMD location = new LocationCMD("Loc1");
 

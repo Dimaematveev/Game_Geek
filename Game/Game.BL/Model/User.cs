@@ -11,8 +11,11 @@ namespace Game.BL.Model
     /// </summary>
     public class User
     {
+        /// <summary>
+        /// Имя пользователя!
+        /// </summary>
         protected string UserName {get; }
-        protected int Money { get; set; }
+       
 
         public User(string name)
         {
@@ -22,7 +25,6 @@ namespace Game.BL.Model
             }
 
             UserName = name;
-            Money = 200;
         }
 
 

@@ -47,6 +47,7 @@
     <Compile Include="Model\LocationCMD.cs" />
     <Compile Include="Model\PlayCMD.cs" />
     <Compile Include="Model\UserCMD.cs" />
+    <Compile Include="Model\UsersOptionsCMD\PlayerCMD.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

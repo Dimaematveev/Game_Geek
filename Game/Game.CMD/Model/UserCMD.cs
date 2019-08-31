@@ -16,7 +16,7 @@ namespace Game.CMD.Model
 
         public void ToConsole()
         {
-            Console.WriteLine($"Ваше имя - {UserName} имеете {Money} монет.");
+            Console.WriteLine($"Ваше имя - {UserName}.");
         }
     }
 }
