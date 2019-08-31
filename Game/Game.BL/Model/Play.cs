@@ -18,7 +18,7 @@ namespace Game.BL.Model
         /// <summary>
         /// Текущая локация.
         /// </summary>
-        protected Location CurrentLocation;
+        public Location CurrentLocation { get; private set; }
 
         public Play(User currentUser, Location currentLocation)
         {

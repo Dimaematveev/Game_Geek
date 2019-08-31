@@ -9,12 +9,12 @@ namespace Game.BL.Controller
 {
     public class ProductController
     {
-        protected readonly Product[] Products;
+        public readonly Product[] Products;
         public ProductController(Product[] products)
         {
             if (products == null || products.Length == 0)
             {
-                throw new ArgumentNullException("Список локаций не должен быть пустым!", nameof(products));
+                throw new ArgumentNullException("Список продуктов не должен быть пустым!", nameof(products));
             }
             Products = products;
         }

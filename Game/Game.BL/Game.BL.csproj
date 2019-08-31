@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="Controller\ControllerLocation.cs" />
     <Compile Include="Controller\LocationsControllerOptions\HomeController.cs" />
+    <Compile Include="Controller\LocationsControllerOptions\ShopController.cs" />
     <Compile Include="Controller\ProductController.cs" />
     <Compile Include="Controller\ProductsControllerOptions\MouseController.cs" />
     <Compile Include="Model\Location.cs" />
@@ -50,6 +51,7 @@
     <Compile Include="Model\LocationsOptions\Shop.cs" />
     <Compile Include="Model\Play.cs" />
     <Compile Include="Model\Product.cs" />
+    <Compile Include="Model\ProductsOptions\Keyboard.cs" />
     <Compile Include="Model\ProductsOptions\Mouse.cs" />
     <Compile Include="Model\User.cs" />
     <Compile Include="Model\UsersOptions\Player.cs" />
