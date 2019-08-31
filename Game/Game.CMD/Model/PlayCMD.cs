@@ -12,11 +12,12 @@ namespace Game.CMD.Model
     {
         public PlayCMD(User currentUser, Location currentLocation) : base(currentUser, currentLocation)
         {
+            Console.WriteLine("Вы начали игру!");
         }
 
         public void ToConsole()
         {
-            Console.WriteLine("Вы начали игру!");
+            
             ((IConsole)CurrentLocation).ToConsole();
             ((IConsole)CurrentUser).ToConsole();
 

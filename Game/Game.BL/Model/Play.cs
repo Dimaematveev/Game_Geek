@@ -28,10 +28,38 @@ namespace Game.BL.Model
             }
             if (currentLocation == null)
             {
-                throw new ArgumentNullException("Локация не должна быть пустым!", nameof(currentLocation));
+                throw new ArgumentNullException("Локация не должна быть пустой!", nameof(currentLocation));
             }
             CurrentUser = currentUser;
+            NewLocation(currentLocation);
             CurrentLocation = currentLocation;
+        }
+
+        public void ChangeLocation(Location newLocation)
+        {
+            ExitLocation();
+            NewLocation(newLocation);
+        }
+
+        private void ExitLocation()
+        {
+            if (CurrentLocation == null)
+            {
+                throw new ArgumentException("Текущая локация уже пуста!", nameof(CurrentLocation));
+            }
+            CurrentLocation = null;
+        }
+        private void NewLocation(Location newLocation)
+        {
+            if (CurrentLocation!=null)
+            {
+                throw new ArgumentException("Текущая локация должна быть пустой!", nameof(CurrentLocation));
+            }
+            if (newLocation == null)
+            {
+                throw new ArgumentNullException("Новая локация не должна быть пустой!", nameof(newLocation));
+            }
+            CurrentLocation = newLocation;
         }
     }
 }
