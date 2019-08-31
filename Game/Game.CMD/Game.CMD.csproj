@@ -47,6 +47,8 @@
     <Compile Include="Model\LocationCMD.cs" />
     <Compile Include="Model\LocationsOptions\HomeCMD.cs" />
     <Compile Include="Model\PlayCMD.cs" />
+    <Compile Include="Model\ProductCMD.cs" />
+    <Compile Include="Model\ProductsOptions\MouseCMD.cs" />
     <Compile Include="Model\UserCMD.cs" />
     <Compile Include="Model\UsersOptionsCMD\PlayerCMD.cs" />
     <Compile Include="Program.cs" />
