@@ -10,7 +10,7 @@ namespace Game.CMD.Model
 {
     class LocationCMD : Location, IConsole
     {
-        public LocationCMD(string locationName,User user) : base(locationName,user)
+        public LocationCMD(string locationName) : base(locationName)
         {
         }
 

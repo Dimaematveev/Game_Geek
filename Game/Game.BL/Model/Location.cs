@@ -6,24 +6,24 @@ using System.Threading.Tasks;
 
 namespace Game.BL.Model
 {
+    /// <summary>
+    /// Локация. 
+    /// </summary>
     public class Location
     {
+        /// <summary>
+        /// Название локации.
+        /// </summary>
         protected string LocationName { get; }
-        protected User CurrentUser { get; }
 
-        public Location(string locationName, User currentUser)
+        public Location(string locationName)
         {
             if (string.IsNullOrWhiteSpace(locationName))
             {
                 throw new ArgumentNullException("Имя локации не может быть пустым!!", nameof(locationName));
             }
-            if (currentUser == null)
-            {
-                throw new ArgumentNullException("Пользователь не может быть пустым!!", nameof(currentUser));
-            }
-
+          
             LocationName = locationName;
-            CurrentUser = currentUser;
         }
 
     }

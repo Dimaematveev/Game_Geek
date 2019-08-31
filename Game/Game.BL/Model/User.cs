@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Game.BL.Model
 {
+    /// <summary>
+    /// Пользователь!
+    /// </summary>
     public class User
     {
         protected string UserName {get; }
