@@ -8,6 +8,6 @@ namespace Game.CMD.Interface
 {
     public interface IConsole
     {
-        void ToConsole();
+        void ToConsole(int spaceLeft);
     }
 }

@@ -14,8 +14,9 @@ namespace Game.CMD.Model
         {
         }
 
-        public void ToConsole()
+        public void ToConsole(int spaceLeft)
         {
+            Console.CursorLeft = spaceLeft;
             Console.WriteLine($"Вы находитесь на локации {LocationName}.");
         }
     }

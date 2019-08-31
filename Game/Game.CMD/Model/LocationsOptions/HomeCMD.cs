@@ -14,9 +14,12 @@ namespace Game.CMD.Model.LocationsOptions
         {
         }
 
-        public void ToConsole()
+        public void ToConsole(int spaceLeft)
         {
-            Console.WriteLine($"Вы дома {LocationName}.");
+            Console.CursorLeft=spaceLeft;
+            Console.WriteLine($"Дом:");
+            Console.CursorLeft=spaceLeft+3;
+            Console.WriteLine($"Название - {LocationName}.");
         }
     }
 }

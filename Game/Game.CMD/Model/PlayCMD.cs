@@ -15,11 +15,17 @@ namespace Game.CMD.Model
             Console.WriteLine("Вы начали игру!");
         }
 
-        public void ToConsole()
+        public void ToConsole(int spaceLeft)
         {
+            Console.CursorLeft = spaceLeft;
+            Console.WriteLine("Локация:");
             
-            ((IConsole)CurrentLocation).ToConsole();
-            ((IConsole)CurrentUser).ToConsole();
+            ((IConsole)CurrentLocation).ToConsole(spaceLeft+3);
+            Console.CursorLeft = spaceLeft;
+            Console.WriteLine("Ваш персонаж:");
+            ((IConsole)CurrentUser).ToConsole(spaceLeft+3);
+
+            
 
         }
     }

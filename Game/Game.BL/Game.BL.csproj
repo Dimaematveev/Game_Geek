@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controller\ControllerLocation.cs" />
+    <Compile Include="Controller\LocationsControllerOptions\HomeController.cs" />
     <Compile Include="Model\Location.cs" />
     <Compile Include="Model\LocationsOptions\Home.cs" />
     <Compile Include="Model\Play.cs" />

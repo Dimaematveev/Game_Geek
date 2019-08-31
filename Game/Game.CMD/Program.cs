@@ -1,4 +1,5 @@
-﻿using Game.CMD.Model;
+﻿using Game.BL.Controller.LocationsControllerOptions;
+using Game.CMD.Model;
 using Game.CMD.Model.LocationsOptions;
 using Game.CMD.Model.UsersOptionsCMD;
 using System;
@@ -13,7 +14,7 @@ namespace Game.CMD
     {
         static void Main(string[] args)
         {
-            PlayerCMD user = new PlayerCMD("Dima");
+            
 
             List<HomeCMD> Home = new List<HomeCMD>
             {
@@ -22,11 +23,14 @@ namespace Game.CMD
                 new HomeCMD("Дом 3 модный."),
                 new HomeCMD("Дом 4 элитный.")
             };
+            HomeController homeController = new HomeController(Home.ToArray());
+            PlayerCMD player = new PlayerCMD("Dima",(HomeCMD)(homeController.CurrentLocation));
+           
 
-            PlayCMD play = new PlayCMD(user, Home[0]);
-            play.ToConsole();
+            PlayCMD play = new PlayCMD(player, player.CurrentHome);
+            play.ToConsole(3);
             play.ChangeLocation(Home[1]);
-            play.ToConsole();
+            play.ToConsole(3);
 
             Console.ReadLine();
         }

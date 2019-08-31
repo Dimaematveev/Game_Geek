@@ -9,9 +9,20 @@ namespace Game.BL.Controller
 {
     public class ControllerLocation
     {
-        List<Location> Locations;
-        Location CurrentLocation;
-
-
+        protected readonly Location[] Locations;
+        public Location CurrentLocation { get; private set; }
+        public ControllerLocation(Location[] locations, Location currentLocation)
+        {
+            if (locations==null || locations.Length==0)
+            {
+                throw new ArgumentNullException("Список локаций не должен быть пустым!", nameof(locations));
+            }
+            if (currentLocation == null )
+            {
+                throw new ArgumentNullException("Текущая локация не должна быть пустой!", nameof(currentLocation));
+            }
+            Locations = locations;
+            CurrentLocation=currentLocation;
+        }
     }
 }
