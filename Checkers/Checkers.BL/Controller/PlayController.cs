@@ -58,5 +58,17 @@ namespace Checkers.BL.Controller
                 CurrentTeam = TeamWhite;
             }
         }
+        public List<Figure> CanGo()
+        {
+            var res = new List<Figure>();
+            foreach (var figure in CurrentTeam.Figures)
+            {
+                if (CurrentTeam.PlayingBoard.CanGo(figure.PozY, figure.PozX))
+                {
+                    res.Add(figure);
+                }
+            }
+            return res;
+        }
     }
 }

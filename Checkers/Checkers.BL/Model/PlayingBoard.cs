@@ -27,14 +27,14 @@ namespace Checkers.BL.Model
         {
             NumX = 8;
             NumY = 8;
-            Figures = new Figure[NumX, NumY];
+            Figures = new Figure[NumY, NumX];
         }
 
         public void AddFigure(Figure figure)
         {
-            if (Figures[figure.PozX, figure.PozY]==null)
+            if (Figures[figure.PozY, figure.PozX]==null)
             {
-                Figures[figure.PozX, figure.PozY] = figure;
+                Figures[figure.PozY, figure.PozX] = figure;
             }
             else
             {
@@ -45,9 +45,9 @@ namespace Checkers.BL.Model
         {
             foreach (var figure in figures)
             {
-                if (Figures[figure.PozX, figure.PozY] == null)
+                if (Figures[figure.PozY, figure.PozX] == null)
                 {
-                    Figures[figure.PozX, figure.PozY] = figure;
+                    Figures[figure.PozY, figure.PozX] = figure;
                 }
                 else
                 {
@@ -55,6 +55,37 @@ namespace Checkers.BL.Model
                 }
             }
            
+        }
+        public bool CanGo(int y, int x)
+        {
+
+            
+            if (IsEmptyCage(y + 1, x + 1) || IsEmptyCage(y + 1, x - 1) || IsEmptyCage(y - 1, x - 1) || IsEmptyCage(y - 1, x + 1))
+            {
+                return true;
+            }
+            return false;
+        }
+        /// <summary>
+        /// Пуста такая клетка.
+        /// </summary>
+        /// <param name="y"></param>
+        /// <param name="x"></param>
+        /// <returns></returns>
+        private bool IsEmptyCage(int y, int x)
+        {
+            if (y >= NumY || y < 0 || x >= NumX || x < 0) 
+            {
+                return false;
+            }
+            else if(Figures[y, x]==null)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }

@@ -68,7 +68,7 @@ namespace Checkers.CMD
                 Console.WriteLine("Выберите фигуру:");
                 Console.WriteLine("Введите номер строки:");
                 int y;
-                var resY = playController.CurrentTeam.Figures.Select(f => f.PozY).ToArray();
+                var resY = playController.CanGo().Select(f => f.PozY).ToArray();
                 while (!(int.TryParse(Console.ReadLine(), out y)) || !(resY.Contains(y)))
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
@@ -77,7 +77,7 @@ namespace Checkers.CMD
                 }
                 Console.WriteLine("Введите номер столбца:");
                 int x;
-                var resX = playController.CurrentTeam.Figures.Where(f => f.PozY == y).Select(f => f.PozX).ToArray();
+                var resX = playController.CanGo().Where(f => f.PozY == y).Select(f => f.PozX).ToArray();
                 while (!(int.TryParse(Console.ReadLine(), out x)) || !(resX.Contains(x)))
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
