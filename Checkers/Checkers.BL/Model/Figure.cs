@@ -22,12 +22,12 @@ namespace Checkers.BL.Model
         /// <summary>
         /// Свойство позиции по X.
         /// </summary>
-        protected int PozX
+        public int PozX
         {
             get => _pozX;
-            private set
+            protected set
             {
-                if (value < 1 || value > 8 )
+                if (value < 0 || value > 7 )
                 {
                     throw new ArgumentException("Позиция шашки не может быть больше 8 и меньше 1!", nameof(PozX));
                 }
@@ -38,14 +38,14 @@ namespace Checkers.BL.Model
         /// <summary>
         /// Свойство позиции по Y.
         /// </summary>
-        protected int PozY
+        public int PozY
         {
             get => _pozY;
-            private set
+            protected set
             {
-                if (value < 1 || value > 8)
+                if (value < 0 || value > 7)
                 {
-                    throw new ArgumentException("Позиция шашки не может быть больше 8 и меньше 1!", nameof(PozX));
+                    throw new ArgumentException("Позиция шашки не может быть больше 7 и меньше 0!", nameof(PozX));
                 }
                 _pozY = value;
             }
@@ -56,7 +56,11 @@ namespace Checkers.BL.Model
         {
             PozX = pozX;
             PozY = pozY;
-            
+        }
+
+        public virtual void Move(int kx,int ky)
+        {
+
         }
     }
 }

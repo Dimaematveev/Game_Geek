@@ -13,6 +13,13 @@ namespace Checkers.BL.Model.FigureTypes
     {
         public Man(int pozX, int pozY) : base(pozX, pozY)
         {
+            
+        }
+        public override void Move(int kx, int ky)
+        {
+            PozX += kx;
+            PozY += ky;
+
         }
     }
 }

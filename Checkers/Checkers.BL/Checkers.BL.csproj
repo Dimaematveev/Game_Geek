@@ -41,13 +41,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controller\PlayController.cs" />
     <Compile Include="Model\Figure.cs" />
     <Compile Include="Model\FigureTypes\Man.cs" />
     <Compile Include="Model\FigureTypes\King.cs" />
+    <Compile Include="Model\PlayingBoard.cs" />
+    <Compile Include="Model\Team.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Controller\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
