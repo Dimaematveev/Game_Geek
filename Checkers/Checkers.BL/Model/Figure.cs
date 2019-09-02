@@ -29,7 +29,7 @@ namespace Checkers.BL.Model
             {
                 if (value < 0 || value > 7 )
                 {
-                    throw new ArgumentException("Позиция шашки не может быть больше 8 и меньше 1!", nameof(PozX));
+                    throw new ArgumentException("Позиция шашки не может быть больше 7 и меньше 0!", nameof(PozX));
                 }
                 _pozX = value;
             }

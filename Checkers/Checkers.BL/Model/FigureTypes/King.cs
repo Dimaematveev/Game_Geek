@@ -14,5 +14,15 @@ namespace Checkers.BL.Model.FigureTypes
         public King(int pozX, int pozY) : base(pozX, pozY)
         {
         }
+        public override void Move(int ky, int kx)
+        {
+            if (Math.Abs(kx) != Math.Abs(ky))
+            {
+                throw new ArgumentException("Ход недопустим");
+            }
+            PozX += kx;
+            PozY += ky;
+
+        }
     }
 }

@@ -11,14 +11,16 @@ namespace Checkers.BL.Controller
     {
        
 
-        Team TeamWhite { get; set; }
-        Team TeamBlack { get; set; }
-        PlayingBoard PlayingBoard { get; set; }
+        private Team TeamWhite { get; set; }
+        private Team TeamBlack { get; set; }
+        public PlayingBoard PlayingBoard { get; private set; }
+        public Team CurrentTeam { get; private set; }
 
         public PlayController(Team teamWhite, Team teamBlack, PlayingBoard playingBoard)
         {
             TeamWhite = teamWhite;
             TeamBlack = teamBlack;
+            TeamChange();
             PlayingBoard = playingBoard;
             for (int i = 0; i < 3; i++)
             {
@@ -37,6 +39,24 @@ namespace Checkers.BL.Controller
             }
             PlayingBoard.AddFigure(TeamBlack.Figures);
             PlayingBoard.AddFigure(TeamWhite.Figures);
+        }
+        public void Move(int y, int x, int ky, int kx)
+        {
+            CurrentTeam.Move(y, x, y + ky, x + kx);
+
+            PlayingBoard.Figures[y + ky, x + kx] = PlayingBoard.Figures[y, x];
+            PlayingBoard.Figures[y, x] = null;
+        }
+        public void TeamChange()
+        {
+            if (CurrentTeam==TeamWhite)
+            {
+                CurrentTeam = TeamBlack;
+            }
+            else
+            {
+                CurrentTeam = TeamWhite;
+            }
         }
     }
 }

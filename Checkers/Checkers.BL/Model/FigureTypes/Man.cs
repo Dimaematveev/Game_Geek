@@ -15,8 +15,12 @@ namespace Checkers.BL.Model.FigureTypes
         {
             
         }
-        public override void Move(int kx, int ky)
+        public override void Move(int ky, int kx)
         {
+            if (Math.Abs(kx) != 1 || Math.Abs(ky) != 1)
+            {
+                throw new ArgumentException("Ход недопустим");
+            }
             PozX += kx;
             PozY += ky;
 
