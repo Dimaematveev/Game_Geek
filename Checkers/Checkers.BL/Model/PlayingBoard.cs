@@ -56,11 +56,11 @@ namespace Checkers.BL.Model
             }
            
         }
-        public bool CanGo(int y, int x)
+        public bool CanGo(int y, int x, int k)
         {
 
             
-            if (IsEmptyCage(y + 1, x + 1) || IsEmptyCage(y + 1, x - 1) || IsEmptyCage(y - 1, x - 1) || IsEmptyCage(y - 1, x + 1))
+            if (IsEmptyCage(y + k, x + 1) || IsEmptyCage(y + k, x - 1))
             {
                 return true;
             }
@@ -81,6 +81,37 @@ namespace Checkers.BL.Model
             else if(Figures[y, x]==null)
             {
                 return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool MustFight(int y, int x)
+        {
+            if ((IsEnemyCage(y, x,1,1)) || (IsEnemyCage(y, x,-1,1)) || (IsEnemyCage(y, x,1,-1)) || (IsEnemyCage(y, x,-1,-1)))
+            {
+                return true;
+            }
+            return false;
+        }
+        /// <summary>
+        /// Противник на этой клетке и на следующей пусто?
+        /// </summary>
+        /// <param name="y"></param>
+        /// <param name="x"></param>
+        /// <returns></returns>
+        private bool IsEnemyCage(int y, int x, int ky, int kx)
+        {
+            if (y+ky >= NumY || y+ky < 0 || x+kx >= NumX || x+kx < 0)
+            {
+                return false;
+            }
+            else if (Figures[y + ky, x + kx]!=null && Figures[y, x].Team != Figures[y+ky, x+kx].Team)
+            {
+                return IsEmptyCage(y + 2 * ky, x + 2 * kx);
+                
             }
             else
             {

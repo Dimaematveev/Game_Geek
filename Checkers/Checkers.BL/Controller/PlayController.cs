@@ -63,7 +63,29 @@ namespace Checkers.BL.Controller
             var res = new List<Figure>();
             foreach (var figure in CurrentTeam.Figures)
             {
-                if (CurrentTeam.PlayingBoard.CanGo(figure.PozY, figure.PozX))
+                int k;
+                if (CurrentTeam==TeamBlack)
+                {
+                    k = 1;
+                }
+                else
+                {
+                    k = -1;
+                }
+                if (CurrentTeam.PlayingBoard.CanGo(figure.PozY, figure.PozX,k))
+                {
+                    res.Add(figure);
+                }
+            }
+            return res;
+        }
+        public List<Figure> MustFight()
+        {
+            var res = new List<Figure>();
+            foreach (var figure in CurrentTeam.Figures)
+            {
+
+                if (CurrentTeam.PlayingBoard.MustFight(figure.PozY, figure.PozX))
                 {
                     res.Add(figure);
                 }

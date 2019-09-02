@@ -28,7 +28,7 @@ namespace Checkers.BL.Model
             {
                 throw new ArgumentException("На этом месте уже стоит фигура!", nameof(Figures));
             }
-            Figures.Add(new Man(pozX, pozY));
+            Figures.Add(new Man(pozX, pozY,this));
         }
 
         public void Move(int y, int x, int yNew, int xNew)

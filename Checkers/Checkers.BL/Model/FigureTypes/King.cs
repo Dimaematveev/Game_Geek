@@ -11,7 +11,7 @@ namespace Checkers.BL.Model.FigureTypes
     /// </summary>
     public class King : Figure
     {
-        public King(int pozX, int pozY) : base(pozX, pozY)
+        public King(int pozX, int pozY,Team team) : base(pozX, pozY, team)
         {
         }
         public override void Move(int ky, int kx)

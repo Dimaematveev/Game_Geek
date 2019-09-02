@@ -22,6 +22,8 @@ namespace Checkers.BL.Model
         /// <summary>
         /// Свойство позиции по X.
         /// </summary>
+        
+        public Team Team { get; private set; }
         public int PozX
         {
             get => _pozX;
@@ -52,10 +54,11 @@ namespace Checkers.BL.Model
 
         }
 
-        public Figure(int pozX, int pozY)
+        public Figure(int pozX, int pozY, Team team)
         {
             PozX = pozX;
             PozY = pozY;
+            Team = team;
         }
 
         public virtual void Move(int kx,int ky)

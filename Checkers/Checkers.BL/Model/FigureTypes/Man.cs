@@ -11,7 +11,7 @@ namespace Checkers.BL.Model.FigureTypes
     /// </summary>
     public class Man : Figure
     {
-        public Man(int pozX, int pozY) : base(pozX, pozY)
+        public Man(int pozX, int pozY, Team team) : base(pozX, pozY, team)
         {
             
         }
