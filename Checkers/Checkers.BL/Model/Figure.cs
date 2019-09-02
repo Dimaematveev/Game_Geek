@@ -24,6 +24,8 @@ namespace Checkers.BL.Model
         /// </summary>
         
         public Team Team { get; private set; }
+
+        
         public int PozX
         {
             get => _pozX;
@@ -65,5 +67,6 @@ namespace Checkers.BL.Model
         {
 
         }
+
     }
 }
