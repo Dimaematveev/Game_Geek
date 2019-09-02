@@ -65,7 +65,7 @@ namespace Checkers.BL.Model
 
         public virtual void Move(int kx,int ky)
         {
-
+            //Идея список вариантов хода!
         }
 
     }
