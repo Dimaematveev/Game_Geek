@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Checkers.BL.Model.Interfaces
 {
     /// <summary>
-    /// Интерфейс Фигур.
+    /// Интерфейс шахматной Фигуры. 
     /// </summary>
     public interface IPiece
     {
@@ -23,6 +23,6 @@ namespace Checkers.BL.Model.Interfaces
         /// <summary>
         /// Возможные движения.
         /// </summary>
-        IEnumerator<IHowMove> HowMoves { get; }
+        IEnumerable<IHowMove> HowMoves { get; }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Checkers.BL.Controller;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,6 +11,9 @@ namespace Checkers.CMD
     {
         static void Main(string[] args)
         {
+            PlayController playController = new PlayController();
+            
+            Console.ReadLine();
         }
     }
 }

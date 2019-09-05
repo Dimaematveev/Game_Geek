@@ -12,7 +12,7 @@ namespace Checkers.BL.Model.Interfaces
     public interface IHowMove
     {
         /// <summary>
-        /// Id движения.
+        /// Id возможных движений движения.
         /// </summary>
         int Id { get; }
         /// <summary>

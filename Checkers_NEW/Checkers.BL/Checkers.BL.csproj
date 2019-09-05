@@ -41,10 +41,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controller\PlayController.cs" />
     <Compile Include="Model\Interfaces\IBoard.cs" />
+    <Compile Include="Model\Interfaces\ICheckersCell.cs" />
     <Compile Include="Model\Interfaces\IHowMove.cs" />
     <Compile Include="Model\Interfaces\IPiece.cs" />
     <Compile Include="Model\Interfaces\IPlayer.cs" />
+    <Compile Include="Model\SimpleBoard.cs" />
+    <Compile Include="Model\SimpleCheckersCell.cs" />
+    <Compile Include="Model\SimpleHowMove.cs" />
+    <Compile Include="Model\SimplePiece.cs" />
+    <Compile Include="Model\SimplePlayer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

@@ -12,6 +12,14 @@ namespace Checkers.BL.Model.Interfaces
     public interface IBoard
     {
         /// <summary>
+        /// Массив клеток на которых возможно играть.
+        /// </summary>
+        ICheckersCell[] CheckersCells { get; set; }
+        /// <summary>
+        /// Id Доски.
+        /// </summary>
+        int Id { get; }
+        /// <summary>
         /// Количество клеток в которых можно перемещаться. (Для шашек только белые.) 
         /// Количество позиций!
         /// </summary>

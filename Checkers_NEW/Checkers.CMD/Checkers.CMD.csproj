@@ -49,5 +49,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Checkers.BL\Checkers.BL.csproj">
+      <Project>{abeee80d-b227-4c1f-ae16-4de464e0e803}</Project>
+      <Name>Checkers.BL</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
