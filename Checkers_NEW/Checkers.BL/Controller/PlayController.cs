@@ -86,5 +86,27 @@ namespace Checkers.BL.Controller
 
 
         }
+
+
+
+        /// TODO: Пока не знаю куда деть!!! 
+
+        public int Row { get => Board.Rows; }
+        public int Column { get => Board.Columns; }
+        //название что стоит в ячейке(Игрок+название фигуры)
+        public string CheckersCell(int row, int column)
+        {
+            var temp = Board[row, column];
+            string figure = "";
+            if (temp != null)
+            {
+                figure = temp.Player.Name.Substring(0, 1);
+                figure += "_";
+                figure += temp.Piece.Name.Substring(0, 1);
+            }
+            return figure;
+        }
+
+
     }
 }
