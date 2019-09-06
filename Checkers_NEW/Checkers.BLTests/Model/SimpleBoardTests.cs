@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Checkers.BL.Model.Tests
+namespace Checkers.BLTests.Model
 {
     [TestClass()]
     public class SimpleBoardTests

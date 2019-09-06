@@ -14,6 +14,11 @@ namespace Checkers.BL.Model
     {
         public SimplePlayer(string name)
         {
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                throw new ArgumentNullException($"Имя игрока не должно быть пустым! ({name})", nameof(name));
+            }
+
             Name = name;
         }
         /// <summary>

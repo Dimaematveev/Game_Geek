@@ -10,10 +10,18 @@ namespace Checkers.BL.Model
     /// <summary>
     /// Клетка на доске.
     /// </summary>
-    class SimpleCheckersCell : ICheckersCell
+    public class SimpleCheckersCell : ICheckersCell
     {
         public SimpleCheckersCell(IPlayer player, IPiece piece)
         {
+            if (player == null)
+            {
+                throw new ArgumentException($"Игрок не должен быть пустым ({player})", nameof(player));
+            }
+            if (piece == null)
+            {
+                throw new ArgumentException($"Фигура не должна быть пустой ({piece})", nameof(piece));
+            }
             Player = player;
             Piece = piece;
         }

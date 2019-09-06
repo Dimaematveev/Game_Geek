@@ -14,6 +14,14 @@ namespace Checkers.BL.Model
     {
         public SimplePiece(string name, IEnumerable<IHowMove> howMoves)
         {
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                throw new ArgumentNullException($"Название фигуры не может быть пустым ({name})", nameof(name));
+            }
+            if (howMoves==null || (howMoves.Count())==0)
+            {
+                throw new ArgumentNullException($"Возможные движения фигуры не может быть пустым или количество их равное нулю ({howMoves})", nameof(howMoves));
+            }
             Name = name;
             HowMoves = howMoves;
         }

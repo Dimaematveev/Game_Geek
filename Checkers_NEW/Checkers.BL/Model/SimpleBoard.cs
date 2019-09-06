@@ -26,11 +26,11 @@ namespace Checkers.BL.Model
         {
             if (rows <= 0 || rows % 2 == 1) 
             {
-                throw new ArgumentException("Размер доски должен быть четным и больше 0", nameof(rows));
+                throw new ArgumentException($"Размер доски должен быть четным и больше 0({rows})", nameof(rows));
             }
             if (columns <= 0 || columns % 2 == 1) 
             {
-                throw new ArgumentException("Размер доски должен быть четным и больше 0", nameof(columns));
+                throw new ArgumentException($"Размер доски должен быть четным и больше 0({columns})", nameof(columns));
             }
             Size = rows * columns / 2;
             CheckersCells = new ICheckersCell[Size];
@@ -70,7 +70,7 @@ namespace Checkers.BL.Model
             {
                 if (!CheckPosition(position))
                 {
-                    throw new ArgumentException($"Позиция не должна быть меньше 1 и больше {Size}",nameof(position)); 
+                    throw new ArgumentException($"Позиция не должна быть меньше 1 и больше {Size} ({position})",nameof(position)); 
                 }
                 return CheckersCells[position - 1];
             }
@@ -78,7 +78,7 @@ namespace Checkers.BL.Model
             {
                 if (!CheckPosition(position))
                 {
-                    throw new ArgumentException($"Позиция не должна быть меньше 1 и больше {Size}", nameof(position));
+                    throw new ArgumentException($"Позиция не должна быть меньше 1 и больше {Size} ({position})", nameof(position));
                 }
                 CheckersCells[position - 1] = value;
             }
@@ -95,11 +95,11 @@ namespace Checkers.BL.Model
             {
                 if (!CheckRow(row))
                 {
-                    throw new ArgumentException($"Ряд не должен быть меньше 1 и больше {Rows}", nameof(row));
+                    throw new ArgumentException($"Ряд не должен быть меньше 1 и больше {Rows} ({row})", nameof(row));
                 }
                 if (!CheckColumn(column))
                 {
-                    throw new ArgumentException($"Столбец не должен быть меньше 1 и больше {Columns}", nameof(column));
+                    throw new ArgumentException($"Столбец не должен быть меньше 1 и больше {Columns} ({column})", nameof(column));
                 }
                 return this[GetPosition(row, column)];
             }
@@ -107,11 +107,11 @@ namespace Checkers.BL.Model
             {
                 if (!CheckRow(row))
                 {
-                    throw new ArgumentException($"Ряд не должен быть меньше 1 и больше {Rows}", nameof(row));
+                    throw new ArgumentException($"Ряд не должен быть меньше 1 и больше {Rows} ({row})", nameof(row));
                 }
                 if (!CheckColumn(column))
                 {
-                    throw new ArgumentException($"Столбец не должен быть меньше 1 и больше {Columns}", nameof(column));
+                    throw new ArgumentException($"Столбец не должен быть меньше 1 и больше {Columns} ({column})", nameof(column));
                 }
                 this[GetPosition(row, column)] = value;
             }
