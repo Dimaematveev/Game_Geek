@@ -19,5 +19,10 @@ namespace Checkers.BL.Model.Interfaces
         /// Имя игрока.
         /// </summary>
         string Name { get; }
+
+        /// <summary>
+        /// Куда ходит игрок вперед или назад. Черные вперед белые назад
+        /// </summary>
+        bool GoesForward { get; }
     }
 }

@@ -52,7 +52,39 @@ namespace Checkers.BL.Model.Interfaces
         /// <returns>Клетка</returns>
         ICheckersCell this[int row, int column] { get;set; }
 
-       
+        /// <summary>
+        /// Получить Позицию на ячейки.
+        /// </summary>
+        /// <param name="row">Ряд и меньше равна Rows и больше 0 </param>
+        /// <param name="column">Столбец меньше равна Columns и больше 0 </param>
+        /// <returns>Позиция в массиве</returns>
+        int GetPosition(int row, int column);
+        /// <summary>
+        /// Проверка на то что такой столбец имеется. 
+        /// </summary>
+        /// <param name="row">Ряд</param>
+        /// <param name="column">столбец</param>
+        /// <returns><c>true</c> если есть <c>false</c> иначе</returns>
+        bool CheckCell(int row,int column);
+
+
+        /// <summary>
+        /// Возможные ходы из этой клетки этим игроком
+        /// </summary>
+        /// <param name="row">Ряд</param>
+        /// <param name="column">Колонка</param>
+        /// <param name="CurrentPlayer">Игрок.</param>
+        /// <returns>Список ходов.</returns>
+        List<int> GetMov(int row, int column, IPlayer CurrentPlayer);
+
+        /// <summary>
+        /// Обязательные ходы из этой клетки этим игроком. Прыжки
+        /// </summary>
+        /// <param name="row">Ряд</param>
+        /// <param name="column">Колонка</param>
+        /// <param name="CurrentPlayer">Игрок.</param>
+        /// <returns>Список ходов.</returns>
+        List<int> GetJump(int row, int column, IPlayer CurrentPlayer);
 
     }
 }

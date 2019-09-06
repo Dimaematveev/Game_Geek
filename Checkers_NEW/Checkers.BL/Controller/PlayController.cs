@@ -18,11 +18,12 @@ namespace Checkers.BL.Controller
         private IBoard Board;
         private IPiece[] Pieces;
         private bool BoardIsFilling=false;
+        private IPlayer CurrentPlayer;
         public PlayController()
         {
             Board = new SimpleBoard(8);
-            BlackPlayer = new SimplePlayer("Black");
-            WhitePlayer = new SimplePlayer("White");
+            BlackPlayer = new SimplePlayer("Black",false);
+            WhitePlayer = new SimplePlayer("White",true);
 
             Pieces = new IPiece[2];
             IEnumerable<IHowMove> manMove = new List<IHowMove>
@@ -41,7 +42,7 @@ namespace Checkers.BL.Controller
             Pieces[1] = new SimplePiece("King", kingMove);
             BoardClear();
             BoardIsFilling = BoardFilling(3);
-
+            CurrentPlayer = WhitePlayer;
         }
         /// <summary>
         /// Заполнение Доски
@@ -87,7 +88,62 @@ namespace Checkers.BL.Controller
 
         }
 
+        public void Move(int row,int col,int rowNew,int colNew)
+        {
+            Board[rowNew, colNew] = Board[row, col];
+            Board[row, col] = null;
+        }
 
+        public void ChangePlayer()
+        {
+            if (CurrentPlayer== BlackPlayer)
+            {
+                CurrentPlayer = WhitePlayer;
+            }
+            else
+            {
+                CurrentPlayer = BlackPlayer;
+            }
+        }
+        /// <summary>
+        /// Возможные ходы для текущего игрока.
+        /// </summary>
+        /// <returns>Список возможных ходов. 1 элемент это откуда, остальные куда.</returns>
+        public List<List<int>> GetPossibleMoves()
+        {
+            List<List<int>> res = new List<List<int>>();
+            for (int r = 1; r <= Board.Rows ; r++)
+            {
+                for (int c = 1; c <= Board.Columns; c++)
+                {
+                    var re = Board.GetMov(r, c, CurrentPlayer);
+                    if (re!=null)
+                    {
+                        res.Add(re);
+                    }
+                    
+                }
+            }
+            return res;
+        }
+
+        /// <summary>
+        /// Обязательные ходы  для текущего игрока. Прыжок
+        /// </summary>
+        /// <returns>Список Обязательных ходов. 1 элемент это откуда, остальные куда.</returns>
+        public List<int> GetJump()
+        {
+            List<int> jump = new List<int>();
+            for (int r = 1; r <= Board.Rows; r++)
+            {
+                for (int c = 1; c <= Board.Columns; c++)
+                {
+                    var re = Board.GetJump(r, c, CurrentPlayer);
+                }
+            }
+
+            return jump;
+        }
 
         /// TODO: Пока не знаю куда деть!!! 
 
@@ -104,6 +160,10 @@ namespace Checkers.BL.Controller
                 figure += "_";
                 figure += temp.Piece.Name.Substring(0, 1);
             }
+            figure += "(";
+            figure += Board.GetPosition(row,column);
+            figure += ")";
+            
             return figure;
         }
 

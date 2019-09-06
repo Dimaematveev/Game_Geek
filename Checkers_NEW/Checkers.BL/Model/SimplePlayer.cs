@@ -12,7 +12,12 @@ namespace Checkers.BL.Model
     /// </summary>
     public class SimplePlayer : IPlayer
     {
-        public SimplePlayer(string name)
+       /// <summary>
+       /// Конструктор.
+       /// </summary>
+       /// <param name="name">Имя игрока</param>
+       /// <param name="goesForward">Ходит вперед?</param>
+        public SimplePlayer(string name, bool goesForward)
         {
             if (string.IsNullOrWhiteSpace(name))
             {
@@ -20,6 +25,7 @@ namespace Checkers.BL.Model
             }
 
             Name = name;
+            GoesForward = goesForward;
         }
         /// <summary>
         /// ID игрока.
@@ -29,6 +35,11 @@ namespace Checkers.BL.Model
         /// Имя игрока.
         /// </summary>
         public string Name { get; }
+
+        /// <summary>
+        /// Куда ходит игрок вперед или назад. Черные вперед белые назад
+        /// </summary>
+        public bool GoesForward { get; }
 
     }
 }

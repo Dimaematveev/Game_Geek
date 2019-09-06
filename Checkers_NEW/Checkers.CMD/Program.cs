@@ -11,14 +11,26 @@ namespace Checkers.CMD
     {
         static void Main(string[] args)
         {
+            
+            PlayController playController = new PlayController();
+            Draw(playController);
+            var White = playController.GetPossibleMoves();
+            playController.ChangePlayer();
+            var Black = playController.GetPossibleMoves();
+            playController.Move(3, 2, 4, 1);
+            Console.WriteLine();
+            Draw(playController);
+            Console.ReadLine();
+        }
+
+        private static void Draw(PlayController playController)
+        {
             //знаков '-'
-            const int numStr = 52;
+            const int numStr = 82;
             //на ячейку
-            const int numCell = 5;
+            const int numCell = 8;
             //на ряд с номерами
             const int numNum = 2;
-            PlayController playController = new PlayController();
-
             Console.Write($"|{"",numNum}|");
             for (int c = 1; c <= playController.Column; c++)
             {
@@ -29,24 +41,22 @@ namespace Checkers.CMD
             for (int r = 1; r <= playController.Row; r++)
             {
                 Console.Write($"|{r,numNum}|");
-               
+
                 for (int c = 1; c <= playController.Column; c++)
                 {
                     if ((r + c) % 2 == 1)
                     {
                         var temp = playController.CheckersCell(r, c);
-                        Console.Write($"{temp, numCell}|");
+                        Console.Write($"{temp,numCell}|");
                     }
                     else
                     {
-                        Console.Write(new string('*', numCell)+"|");
+                        Console.Write(new string('*', numCell) + "|");
                     }
                 }
                 Console.WriteLine();
                 Console.WriteLine(new string('-', numStr));
             }
-
-            Console.ReadLine();
         }
     }
 }

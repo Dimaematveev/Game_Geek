@@ -119,12 +119,65 @@ namespace Checkers.BL.Model
 
        
         /// <summary>
+        /// Возможные ходы из этой клетки этим игроком
+        /// </summary>
+        /// <param name="row">Ряд</param>
+        /// <param name="column">Колонка</param>
+        /// <param name="CurrentPlayer">Игрок.</param>
+        /// <returns>Список ходов. Если нет то null. первый в списке откуда ходит</returns>
+        public List<int> GetMov(int row,int column ,IPlayer CurrentPlayer)
+        {
+            List<int> res = new List<int>();
+           
+            if ((row + column) % 2 == 1 && this[row, column] != null && this[row, column].Player == CurrentPlayer)
+            {
+                res.Add(this.GetPosition(row, column));
+                foreach (var item in this[row, column].Piece.HowMoves)
+                {
+                    int changeRow = item.Row;
+                    if (!this[row, column].Player.GoesForward)
+                    {
+                        changeRow = -item.Row;
+                    }
+
+                    int changeColumn = item.Column;
+
+                    if (this.CheckCell(row + changeRow, column + changeColumn))
+                    {
+                        if (this[row + changeRow, column + changeColumn] == null)
+                        {
+                            res.Add(this.GetPosition(row + changeRow, column + changeColumn));
+                        }
+                    }
+                }
+            }
+            if (res.Count>1)
+            {
+                return res;
+            }
+            return null;
+        }
+
+
+
+        /// <summary>
+        /// Обязательные ходы из этой клетки этим игроком. Прыжки
+        /// </summary>
+        /// <param name="row">Ряд</param>
+        /// <param name="column">Колонка</param>
+        /// <param name="CurrentPlayer">Игрок.</param>
+        /// <returns>Список ходов. Если нет то null. первый в списке откуда ходит</returns>
+        public List<int> GetJump(int row, int column, IPlayer CurrentPlayer)
+        {
+
+        }
+        /// <summary>
         /// Получить Позицию на ячейки.
         /// </summary>
         /// <param name="row">Ряд и меньше равна Rows и больше 0 </param>
         /// <param name="column">Столбец меньше равна Columns и больше 0 </param>
         /// <returns>Позиция в массиве</returns>
-        private int GetPosition(int row, int column)
+        public int GetPosition(int row, int column)
         {
             return ((row - 1) * 4 + (column - 1) / 2) + 1;
         }
@@ -187,6 +240,17 @@ namespace Checkers.BL.Model
                 return false;
             }
             return true;
+        }
+
+        /// <summary>
+        /// Проверка на то что такой столбец имеется. 
+        /// </summary>
+        /// <param name="row">Ряд</param>
+        /// <param name="column">столбец</param>
+        /// <returns><c>true</c> если есть <c>false</c> иначе</returns>
+        public bool CheckCell(int row, int column)
+        {
+            return CheckRow(row) && CheckColumn(column);
         }
 
     }
