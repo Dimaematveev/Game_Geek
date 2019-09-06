@@ -14,12 +14,31 @@ namespace Checkers.CMD
             
             PlayController playController = new PlayController();
             Draw(playController);
-            var White = playController.GetPossibleMoves();
-            playController.ChangePlayer();
-            var Black = playController.GetPossibleMoves();
-            playController.Move(3, 2, 4, 1);
-            Console.WriteLine();
-            Draw(playController);
+            while (true)
+            {
+                var WhitePos = playController.GetPossibleMoves();
+                var WhiteJump = playController.GetJump();
+
+                playController.ChangePlayer();
+                var BlackPos = playController.GetPossibleMoves();
+                var BlackJump = playController.GetJump();
+                playController.ChangePlayer();
+                Console.WriteLine();
+                Draw(playController);
+                Console.WriteLine("Введи откуда пойдешь");
+                int pos;
+                while (!int.TryParse(Console.ReadLine(),out pos) || pos <= 0 || pos > 32)
+                {
+                    Console.WriteLine("Неверно");
+                }
+                Console.WriteLine("Введи куда пойдешь");
+                int posnew = int.Parse(Console.ReadLine());
+                playController.Move(pos, posnew);
+                
+            }
+            
+
+            
             Console.ReadLine();
         }
 

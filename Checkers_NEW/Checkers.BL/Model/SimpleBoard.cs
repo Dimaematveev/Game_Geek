@@ -141,13 +141,19 @@ namespace Checkers.BL.Model
                     }
 
                     int changeColumn = item.Column;
-
-                    if (this.CheckCell(row + changeRow, column + changeColumn))
+                    //Существует ячейка
+                    bool CheckExistsCell = CheckCell(row + changeRow, column + changeColumn);
+                    if (!CheckExistsCell)
                     {
-                        if (this[row + changeRow, column + changeColumn] == null)
-                        {
-                            res.Add(this.GetPosition(row + changeRow, column + changeColumn));
-                        }
+                        continue;
+                    }
+                    //Эта ячейка пуста
+                    bool IsEmptyCell = this[row + changeRow, column + changeColumn] == null;
+
+                    if (IsEmptyCell) 
+                    {
+                        res.Add(this.GetPosition(row + changeRow, column + changeColumn));
+                        
                     }
                 }
             }
@@ -169,6 +175,66 @@ namespace Checkers.BL.Model
         /// <returns>Список ходов. Если нет то null. первый в списке откуда ходит</returns>
         public List<int> GetJump(int row, int column, IPlayer CurrentPlayer)
         {
+            List<int> res = new List<int>();
+            if (IsJump(row,column,CurrentPlayer))
+            {
+                res.Add(GetPosition(row, column));
+            }
+            if (res.Count>0)
+            {
+                return res;
+            }
+            return null;
+
+        }
+        /// <summary>
+        /// Возможен прыжок из этой клетки этим игроком этой фигурой. Прыжки
+        /// </summary>
+        /// <param name="row">Ряд</param>
+        /// <param name="column">Колонка</param>
+        /// <param name="CurrentPlayer">Игрок.</param>
+        /// <param name="CurrentPiece">Фигура.</param>
+        /// <returns>True возможно false нет</returns>
+        private bool IsJump(int row, int column, IPlayer CurrentPlayer)
+        {
+            if ((row + column) % 2 == 1 && this[row, column] != null && this[row, column].Player == CurrentPlayer)
+            {
+                
+                foreach (var item in this[row, column].Piece.HowMoves)
+                {
+                    int changeRow = item.Row;
+                    if (!this[row, column].Player.GoesForward)
+                    {
+                        changeRow = -item.Row;
+                    }
+
+                    int changeColumn = item.Column;
+
+                    //Существует ячейка
+                    bool CheckExistsCell = CheckCell(row + changeRow, column + changeColumn);
+                    if (!CheckExistsCell)
+                    {
+                        continue;
+                    }
+                    //На ней враг
+                    bool IsEnemyCell = this[row + changeRow, column + changeColumn] != null && this[row + changeRow, column + changeColumn].Player != CurrentPlayer;
+                    
+                    //Существует ячейка после
+                    bool CheckExistsCellAfter = CheckCell(row + 2 * changeRow, column + 2 * changeColumn);
+                    if (!CheckExistsCellAfter)
+                    {
+                        continue;
+                    }
+                    //Эта ячейка пуста
+                    bool IsEmptyCellAfter = this[row + 2 * changeRow, column + 2 * changeColumn] == null;
+
+                    if ( IsEnemyCell && IsEmptyCellAfter)
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
 
         }
         /// <summary>

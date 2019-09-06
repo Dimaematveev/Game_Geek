@@ -93,7 +93,11 @@ namespace Checkers.BL.Controller
             Board[rowNew, colNew] = Board[row, col];
             Board[row, col] = null;
         }
-
+        public void Move(int position, int positionNew)
+        {
+            Board[positionNew] = Board[position];
+            Board[position] = null;
+        }
         public void ChangePlayer()
         {
             if (CurrentPlayer== BlackPlayer)
@@ -131,14 +135,18 @@ namespace Checkers.BL.Controller
         /// Обязательные ходы  для текущего игрока. Прыжок
         /// </summary>
         /// <returns>Список Обязательных ходов. 1 элемент это откуда, остальные куда.</returns>
-        public List<int> GetJump()
+        public List<List<int>> GetJump()
         {
-            List<int> jump = new List<int>();
+            List<List<int>> jump = new List<List<int>>();
             for (int r = 1; r <= Board.Rows; r++)
             {
                 for (int c = 1; c <= Board.Columns; c++)
                 {
                     var re = Board.GetJump(r, c, CurrentPlayer);
+                    if (re != null)
+                    {
+                        jump.Add(re);
+                    }
                 }
             }
 
