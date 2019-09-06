@@ -16,37 +16,27 @@ namespace Checkers.BL.Model
         /// Массив клеток на которых возможно играть.
         /// </summary>
         private readonly ICheckersCell[] CheckersCells;
+
         /// <summary>
         /// Конструктор .
         /// </summary>
-        /// <param name="size">Сколько клеток на которых можно играть.</param>
         /// <param name="rows">Сколько Рядов.</param>
         /// <param name="columns">Сколько строк.</param>
-        public SimpleBoard(int size, int rows, int columns)
+        public SimpleBoard(int rows, int columns)
         {
-            if (size % 2 == 1)
+            if (rows <= 0 || rows % 2 == 1) 
             {
-                throw new ArgumentException("Размер доски должен быть четным", nameof(size));
+                throw new ArgumentException("Размер доски должен быть четным и больше 0", nameof(rows));
             }
-            if (rows % 2 == 1)
+            if (columns <= 0 || columns % 2 == 1) 
             {
-                throw new ArgumentException("Размер доски должен быть четным", nameof(rows));
+                throw new ArgumentException("Размер доски должен быть четным и больше 0", nameof(columns));
             }
-            if (columns % 2 == 1)
-            {
-                throw new ArgumentException("Размер доски должен быть четным", nameof(columns));
-            }
-            Size = size;
+            Size = rows * columns / 2;
             CheckersCells = new ICheckersCell[Size];
             Rows = rows;
             Columns = columns;
         }
-        /// <summary>
-        /// Конструктор .
-        /// </summary>
-        /// <param name="rows">Сколько Рядов.</param>
-        /// <param name="columns">Сколько строк.</param>
-        public SimpleBoard(int rows, int columns) : this(rows * columns / 2, rows, columns){    }
         /// <summary>
         /// Конструктор .
         /// </summary>
@@ -78,10 +68,18 @@ namespace Checkers.BL.Model
         {
             get 
             {
+                if (!CheckPosition(position))
+                {
+                    throw new ArgumentException($"Позиция не должна быть меньше 1 и больше {Size}",nameof(position)); 
+                }
                 return CheckersCells[position - 1];
             }
             set
             {
+                if (!CheckPosition(position))
+                {
+                    throw new ArgumentException($"Позиция не должна быть меньше 1 и больше {Size}", nameof(position));
+                }
                 CheckersCells[position - 1] = value;
             }
         }
@@ -95,10 +93,26 @@ namespace Checkers.BL.Model
         {
             get
             {
+                if (!CheckRow(row))
+                {
+                    throw new ArgumentException($"Ряд не должен быть меньше 1 и больше {Rows}", nameof(row));
+                }
+                if (!CheckColumn(column))
+                {
+                    throw new ArgumentException($"Столбец не должен быть меньше 1 и больше {Columns}", nameof(column));
+                }
                 return this[GetPosition(row, column)];
             }
             set
             {
+                if (!CheckRow(row))
+                {
+                    throw new ArgumentException($"Ряд не должен быть меньше 1 и больше {Rows}", nameof(row));
+                }
+                if (!CheckColumn(column))
+                {
+                    throw new ArgumentException($"Столбец не должен быть меньше 1 и больше {Columns}", nameof(column));
+                }
                 this[GetPosition(row, column)] = value;
             }
         }
@@ -133,6 +147,46 @@ namespace Checkers.BL.Model
         {
             return (((position - 1) % 4)*2+(GetRow(position)%2)+1);
 
+        }
+
+        /// <summary>
+        /// Проверка на то что такая позиция имеется
+        /// </summary>
+        /// <param name="position">Позиция</param>
+        /// <returns><c>true</c> если есть <c>false</c> иначе</returns>
+        private bool CheckPosition(int position)
+        {
+            if (position <= 0 || position > Size)
+            {
+                return false;
+            }
+            return true;
+        }
+        /// <summary>
+        /// Проверка на то что такой ряд имеется
+        /// </summary>
+        /// <param name="row">Ряд</param>
+        /// <returns><c>true</c> если есть <c>false</c> иначе</returns>
+        private bool CheckRow(int row)
+        {
+            if (row <= 0 || row > Rows)
+            {
+                return false;
+            }
+            return true;
+        }
+        /// <summary>
+        /// Проверка на то что такой столбец имеется. 
+        /// </summary>
+        /// <param name="column">столбец</param>
+        /// <returns><c>true</c> если есть <c>false</c> иначе</returns>
+        private bool CheckColumn(int column)
+        {
+            if (column <= 0 || column > Columns)
+            {
+                return false;
+            }
+            return true;
         }
     }
 }
