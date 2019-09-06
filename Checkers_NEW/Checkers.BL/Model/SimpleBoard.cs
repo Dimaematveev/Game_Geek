@@ -15,7 +15,7 @@ namespace Checkers.BL.Model
         /// <summary>
         /// Массив клеток на которых возможно играть.
         /// </summary>
-        public ICheckersCell[] CheckersCells { get; set; }
+        private readonly ICheckersCell[] CheckersCells;
         /// <summary>
         /// Конструктор .
         /// </summary>
