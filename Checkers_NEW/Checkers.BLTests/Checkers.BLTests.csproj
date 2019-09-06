@@ -57,6 +57,10 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Model\SimpleBoardTests.cs" />
+    <Compile Include="Model\SimpleCheckersCellTests.cs" />
+    <Compile Include="Model\SimpleHowMoveTests.cs" />
+    <Compile Include="Model\SimplePieceTests.cs" />
+    <Compile Include="Model\SimplePlayerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
