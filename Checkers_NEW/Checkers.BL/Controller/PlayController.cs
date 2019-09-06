@@ -17,6 +17,7 @@ namespace Checkers.BL.Controller
         private IPlayer WhitePlayer;
         private IBoard Board;
         private IPiece[] Pieces;
+        private bool BoardIsFilling=false;
         public PlayController()
         {
             Board = new SimpleBoard(8);
@@ -39,25 +40,40 @@ namespace Checkers.BL.Controller
             };
             Pieces[1] = new SimplePiece("King", kingMove);
             BoardClear();
-            BoardFilling(3);
+            BoardIsFilling = BoardFilling(3);
 
         }
         /// <summary>
         /// Заполнение Доски
         /// </summary>
         /// <param name="numRowBegin">Сколько рядов будет заполнено шашками в начале игры</param>
-        private void BoardFilling(int numRowBegin)
+        private bool BoardFilling(int numRowBegin)
         {
             //Количество строк занятыми фигурами.
-           
-            for (int i = 1; i <= Board.Rows* numRowBegin / 2; i++)
-            {
-                Board[i] = new SimpleCheckersCell(BlackPlayer, Pieces[0]);
-                Board[Board.Size-i+1] = new SimpleCheckersCell(WhitePlayer, Pieces[0]);
-            }
-            
 
+            if (numRowBegin < Board.Rows/2)
+            {
+                for (int rBlack = 1; rBlack <= numRowBegin; rBlack++)
+                {
+                    int rWhite = Board.Rows - rBlack + 1;
+                    for (int c = 1; c <= Board.Columns; c++)
+                    {
+                        if ((rBlack + c) % 2 == 1)
+                        {
+                            Board[rBlack, c] = new SimpleCheckersCell(WhitePlayer, Pieces[0]);
+                        }
+                        if ((rWhite + c) % 2 == 1)
+                        {
+                            Board[rWhite, c] = new SimpleCheckersCell(BlackPlayer, Pieces[0]);
+                        }
+
+                    }
+                }
+                return true;
+            }
+            return false;
         }
+      
         /// <summary>
         /// Очистка Доски
         /// </summary>
