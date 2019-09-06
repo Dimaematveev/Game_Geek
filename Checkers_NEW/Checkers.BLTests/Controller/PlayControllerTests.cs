@@ -19,13 +19,54 @@ namespace Checkers.BLTests.Controller
 
             PrivateObject privateObject = new PrivateObject(playController);
 
-            (void)privateObject.Invoke("BoardFilling", 0);
-
-            IPiece[] pieces = (IPiece[])(privateObject.GetFieldOrProperty("Pieces"));
-
-            foreach (var piece in pieces)
+            IBoard[] boards = new IBoard[]
             {
-                Assert.AreEqual(piece, null);
+                null, null,null, null,
+                null, null,null, null,
+                null, null,null, null,
+                null, null,null, null,
+                null, null,null, null,
+                null, null,null, null,
+                null, null,null, null,
+                null, null,null, null,
+            };
+
+            privateObject.Invoke("BoardClear");
+
+            IBoard board = (IBoard)(privateObject.GetFieldOrProperty("Board"));
+
+            for (int i = 1; i <= board.Size; i++)
+            {
+                Assert.AreEqual(boards[i-1], board[i]);
+            }
+          
+        }
+
+        [TestMethod()]
+        public void ConstructorNotParam_CreateClass1()
+        {
+            PlayController playController = new PlayController();
+
+            PrivateObject privateObject = new PrivateObject(playController);
+
+            privateObject.Invoke("BoardClear");
+            privateObject.Invoke("BoardFilling", 3);
+
+            IBoard board = (IBoard)(privateObject.GetFieldOrProperty("Board"));
+            IBoard[] boards = new IBoard[]
+            {
+                null, null,null, null,
+                null, null,null, null,
+                null, null,null, null,
+                null, null,null, null,
+                null, null,null, null,
+                null, null,null, null,
+                null, null,null, null,
+                null, null,null, null,
+            };
+            for (int i = 1; i <= board.Size; i++)
+            {
+                Assert.AreEqual(null, board[i]);
             }
         }
     }

@@ -38,6 +38,7 @@ namespace Checkers.BL.Controller
                 new SimpleHowMove(1,1)
             };
             Pieces[1] = new SimplePiece("King", kingMove);
+            BoardClear();
             BoardFilling(3);
 
         }
@@ -55,6 +56,18 @@ namespace Checkers.BL.Controller
                 Board[Board.Size-i+1] = new SimpleCheckersCell(WhitePlayer, Pieces[0]);
             }
             
+
+        }
+        /// <summary>
+        /// Очистка Доски
+        /// </summary>
+        private void BoardClear()
+        {
+            for (int i = 1; i <= Board.Size; i++)
+            {
+                Board[i] = null;
+            }
+
 
         }
     }
