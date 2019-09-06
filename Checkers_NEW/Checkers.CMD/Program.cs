@@ -13,28 +13,37 @@ namespace Checkers.CMD
         {
             
             PlayController playController = new PlayController();
-            Draw(playController);
             while (true)
             {
-                var WhitePos = playController.GetPossibleMoves();
-                var WhiteJump = playController.GetJump();
+                Console.WriteLine($"Вы игрок {playController.CurrentPlayer.Name}");
+                //список(список где 0 элемент откуда вожможно движени, а дальше куда)
+                var Pos = playController.GetPossibleMoves();
+                //список(список где 0 элемент откуда должно движени, а дальше куда)
+                var Jump = playController.GetJump();
 
-                playController.ChangePlayer();
-                var BlackPos = playController.GetPossibleMoves();
-                var BlackJump = playController.GetJump();
-                playController.ChangePlayer();
+                //Список всех возможных фигуг двигающиеся
+                var Posit = Pos.ConvertAll(p => p[0]);
+                //Список все возможных движений
+                var Jumpt = Jump.Select(j => j[0]);
+
                 Console.WriteLine();
                 Draw(playController);
                 Console.WriteLine("Введи откуда пойдешь");
                 int pos;
-                while (!int.TryParse(Console.ReadLine(),out pos) || pos <= 0 || pos > 32)
+                while (!int.TryParse(Console.ReadLine(),out pos) || !Posit.Contains(pos))
                 {
                     Console.WriteLine("Неверно");
                 }
+                //Список все возможных движений
+                var Positio = Pos.Find(p=>p[0]==pos).Skip(1);
                 Console.WriteLine("Введи куда пойдешь");
-                int posnew = int.Parse(Console.ReadLine());
+                int posnew;
+                while(!int.TryParse(Console.ReadLine(), out posnew) || !Positio.Contains(posnew))
+                {
+                    Console.WriteLine("Неверно");
+                }
                 playController.Move(pos, posnew);
-                
+                playController.ChangePlayer();
             }
             
 

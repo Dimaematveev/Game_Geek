@@ -18,7 +18,7 @@ namespace Checkers.BL.Controller
         private IBoard Board;
         private IPiece[] Pieces;
         private bool BoardIsFilling=false;
-        private IPlayer CurrentPlayer;
+        public IPlayer CurrentPlayer;
         public PlayController()
         {
             Board = new SimpleBoard(8);
