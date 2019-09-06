@@ -38,17 +38,18 @@ namespace Checkers.BL.Controller
                 new SimpleHowMove(1,1)
             };
             Pieces[1] = new SimplePiece("King", kingMove);
-            BoardFilling();
+            BoardFilling(3);
 
         }
         /// <summary>
         /// Заполнение Доски
         /// </summary>
-        private void BoardFilling()
+        /// <param name="numRowBegin">Сколько рядов будет заполнено шашками в начале игры</param>
+        private void BoardFilling(int numRowBegin)
         {
             //Количество строк занятыми фигурами.
-            int k = 3;
-            for (int i = 1; i <= Board.Rows* k / 2; i++)
+           
+            for (int i = 1; i <= Board.Rows* numRowBegin / 2; i++)
             {
                 Board[i] = new SimpleCheckersCell(BlackPlayer, Pieces[0]);
                 Board[Board.Size-i+1] = new SimpleCheckersCell(WhitePlayer, Pieces[0]);
