@@ -216,5 +216,89 @@ namespace Checkers.BL.Model.Tests
                 column = rnd.Next(-50, 0);
             }
         }
+
+
+        [TestMethod()]
+        public void PrivateGetColumn()
+        {
+            Random rnd = new Random();
+            
+            SimpleBoard simpleBoard = new SimpleBoard(8);
+
+            PrivateObject privateObject = new PrivateObject(simpleBoard);
+            int[] trueValues = new int[]{
+                2, 4, 6, 8 ,
+                1, 3, 5, 7,
+                2, 4, 6, 8,
+                1, 3, 5, 7,
+                2, 4, 6, 8 ,
+                1, 3, 5, 7,
+                2, 4, 6, 8,
+                1, 3, 5, 7 };
+            for (int i = 1; i <= simpleBoard.Size; i++)
+            {
+                //
+                int k=(int)( privateObject.Invoke("GetColumn",i));
+                int trueValue = trueValues[(i - 1)];
+                Assert.AreEqual(trueValue, k, $"\ni={i} true={trueValue} value={k}");
+                //Assert
+
+            }
+            
+        }
+
+        [TestMethod()]
+        public void PrivateGetRow()
+        {
+            Random rnd = new Random();
+
+            SimpleBoard simpleBoard = new SimpleBoard(8);
+
+            PrivateObject privateObject = new PrivateObject(simpleBoard);
+            int[] trueValues = new int[]{
+                1, 1, 1, 1 ,
+                2, 2, 2, 2,
+                3, 3, 3, 3,
+                4, 4, 4, 4,
+                5, 5, 5, 5 ,
+                6, 6, 6, 6,
+                7, 7, 7, 7,
+                8, 8, 8, 8 };
+            for (int i = 1; i <= simpleBoard.Size; i++)
+            {
+                //
+                int k = (int)(privateObject.Invoke("GetRow", i));
+                int trueValue = trueValues[(i - 1)];
+                Assert.AreEqual(trueValue, k, $"\ni={i} true={trueValue} value={k}");
+                //Assert
+
+            }
+
+        }
+
+        [TestMethod()]
+        public void PrivateGetPosition()
+        {
+            Random rnd = new Random();
+
+            SimpleBoard simpleBoard = new SimpleBoard(8);
+
+            PrivateObject privateObject = new PrivateObject(simpleBoard);
+            int trueValue =1;
+            for (int r = 1; r <= simpleBoard.Rows; r++)
+            {
+                for (int c = 1; c <= simpleBoard.Columns; c++)
+                {
+                    if ((r + c) % 2 == 1)
+                    {
+                        int k = (int)(privateObject.Invoke("GetPosition", r, c));
+                        
+                        Assert.AreEqual(trueValue, k, $"\nr={r} c={c} true={trueValue} value={k}");
+                        trueValue++;
+                    }
+                }
+            }
+
+        }
     }
 }

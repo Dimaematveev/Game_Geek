@@ -188,5 +188,12 @@ namespace Checkers.BL.Model
             }
             return true;
         }
+
+
+
+        private int GetOne()
+        {
+            return 1;
+        }
     }
 }
