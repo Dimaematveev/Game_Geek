@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace Checkers.BL.Model
 {
+    /// <summary>
+    /// Клетка на доске.
+    /// </summary>
     class SimpleCheckersCell : ICheckersCell
     {
         public SimpleCheckersCell(IPlayer player, IPiece piece)
@@ -14,9 +17,13 @@ namespace Checkers.BL.Model
             Player = player;
             Piece = piece;
         }
-
+        /// <summary>
+        /// Игрок.
+        /// </summary>
         public IPlayer Player { get; }
-
+        /// <summary>
+        /// Фигура.
+        /// </summary>
         public IPiece Piece { get; }
 
     }

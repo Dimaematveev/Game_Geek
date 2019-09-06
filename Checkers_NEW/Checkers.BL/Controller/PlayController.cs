@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace Checkers.BL.Controller
 {
+    /// <summary>
+    /// Контроллер игры.
+    /// </summary>
     public class PlayController
     {
         private IPlayer BlackPlayer;
@@ -16,7 +19,7 @@ namespace Checkers.BL.Controller
         private IPiece[] Pieces;
         public PlayController()
         {
-            Board = new SimpleBoard(32, 8, 8);
+            Board = new SimpleBoard(8);
             BlackPlayer = new SimplePlayer("Black");
             WhitePlayer = new SimplePlayer("White");
 
@@ -45,10 +48,10 @@ namespace Checkers.BL.Controller
         {
             //Количество строк занятыми фигурами.
             int k = 3;
-            for (int i = 0; i < Board.Rows* k / 2; i++)
+            for (int i = 1; i <= Board.Rows* k / 2; i++)
             {
-                Board.CheckersCells[i] = new SimpleCheckersCell(BlackPlayer, Pieces[0]);
-                Board.CheckersCells[Board.Size-i-1] = new SimpleCheckersCell(WhitePlayer, Pieces[0]);
+                Board[i] = new SimpleCheckersCell(BlackPlayer, Pieces[0]);
+                Board[Board.Size-i+1] = new SimpleCheckersCell(WhitePlayer, Pieces[0]);
             }
             
 

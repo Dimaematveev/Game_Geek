@@ -14,7 +14,9 @@ namespace Checkers.BL.Model.Interfaces
         /// <summary>
         /// Массив клеток на которых возможно играть.
         /// </summary>
-        ICheckersCell[] CheckersCells { get; set; }
+        //ICheckersCell[] CheckersCells { get; set; }
+
+
         /// <summary>
         /// Id Доски.
         /// </summary>
@@ -34,36 +36,23 @@ namespace Checkers.BL.Model.Interfaces
         int Columns { get; }
 
 
-        /// /// <summary>
-        /// Получить фигуру в позиции.
+        /// <summary>
+        /// Получить Клетку на позиции.
         /// </summary>
-        /// <param name="position"> Позиция не больше Size!</param>
-        /// <returns>Фигура.</returns>
-        IPiece GetPiece(int position);
+        /// <param name="position">Позиция из массива меньше равна Size и больше 0 </param>
+        /// <returns>Клетка</returns>
+        ICheckersCell this[int position] { get;set; }
 
 
         /// <summary>
-        /// Получить фигуру на месте.
+        /// Получить Клетку на ячейки.
         /// </summary>
-        /// <param name="row"> Ряд не больше Rows!</param>
-        /// <param name="column"> Столбец не больше Columns!</param>
-        /// <returns>Фигура.</returns>
-        IPiece GetPiece(int row, int column);
+        /// <param name="row">Ряд и меньше равна Rows и больше 0 </param>
+        /// <param name="column">Столбец меньше равна Columns и больше 0 </param>
+        /// <returns>Клетка</returns>
+        ICheckersCell this[int row, int column] { get;set; }
 
-        /// /// <summary>
-        /// Получить Игрока в позиции.
-        /// </summary>
-        /// <param name="position"> Позиция не больше Size!</param>
-        /// <returns>Игрок.</returns>
-        IPlayer GetPlayer(int position);
-
-        /// <summary>
-        /// Получить Игрока на месте.
-        /// </summary>
-        /// <param name="row"> Ряд не больше Rows!</param>
-        /// <param name="column"> Столбец не больше Columns!</param>
-        /// <returns>Игрок.</returns>
-        IPlayer GetPlayer(int row, int column);
+       
 
     }
 }
