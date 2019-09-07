@@ -175,16 +175,28 @@ namespace Checkers.BL.Model
         /// <returns>Список ходов. Если нет то null. первый в списке откуда ходит</returns>
         public List<int> GetJump(int row, int column, IPlayer CurrentPlayer)
         {
+
             List<int> res = new List<int>();
-            if (IsJump(row,column,CurrentPlayer))
+            if ((row + column) % 2 == 1 && this[row, column] != null && this[row, column].Player == CurrentPlayer)
             {
                 res.Add(GetPosition(row, column));
+                ICheckersCell delBeginCheckersCell = this[row, column];
+                this[row, column] = null;
+                res.AddRange(IsJump(row, column, delBeginCheckersCell));
+                this[row, column] = delBeginCheckersCell;
             }
-            if (res.Count>0)
+            
+            //List<int> res = new List<int>();
+            //if (IsJump(row,column,CurrentPlayer))
+            //{
+            //    res.Add(GetPosition(row, column));
+            //}
+            if (res.Count>1)
             {
                 return res;
             }
             return null;
+
 
         }
         /// <summary>
@@ -235,6 +247,61 @@ namespace Checkers.BL.Model
                 }
             }
             return false;
+
+        }
+
+
+        /// <summary>
+        /// Возможен прыжок из этой клетки этим игроком этой фигурой. Прыжки
+        /// </summary>
+        /// <param name="row">Ряд</param>
+        /// <param name="column">Колонка</param>
+        /// <param name="CurrentCheckersCell">Фигура и игрок который бьет.</param>
+        /// <returns>True возможно false нет</returns>
+        private List<int> IsJump(int row, int column, ICheckersCell CurrentCheckersCell)
+        {
+            List<int> res = new List<int>();
+            if ((row + column) % 2 == 1)
+            {
+                foreach (var item in CurrentCheckersCell.Piece.HowMoves)
+                {
+                    int changeRow = item.Row;
+                    if (!CurrentCheckersCell.Player.GoesForward)
+                    {
+                        changeRow = -item.Row;
+                    }
+                    int changeColumn = item.Column;
+
+                    //Существует ячейка
+                    bool CheckExistsCell = CheckCell(row + changeRow, column + changeColumn);
+                    if (!CheckExistsCell)
+                    {
+                        continue;
+                    }
+                    //На ней враг
+                    bool IsEnemyCell = this[row + changeRow, column + changeColumn] != null && this[row + changeRow, column + changeColumn].Player != CurrentCheckersCell.Player;
+
+                    //Существует ячейка после
+                    bool CheckExistsCellAfter = CheckCell(row + 2 * changeRow, column + 2 * changeColumn);
+                    if (!CheckExistsCellAfter)
+                    {
+                        continue;
+                    }
+                    //Эта ячейка пуста
+                    bool IsEmptyCellAfter = this[row + 2 * changeRow, column + 2 * changeColumn] == null;
+
+                    if (IsEnemyCell && IsEmptyCellAfter)
+                    {
+                        ICheckersCell enemyCheckersCell = this[row + changeRow, column + changeColumn];
+                        this[row + changeRow, column + changeColumn] = null;
+                        res.Add(GetPosition(row + changeRow, column + changeColumn));
+                        res.AddRange(IsJump(row + 2 * changeRow, column + 2 * changeColumn, CurrentCheckersCell));
+                        this[row + changeRow, column + changeColumn] = enemyCheckersCell;
+                        
+                    }
+                }
+            }
+                return res;
 
         }
         /// <summary>
