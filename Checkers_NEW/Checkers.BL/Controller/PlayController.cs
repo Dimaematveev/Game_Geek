@@ -154,6 +154,7 @@ namespace Checkers.BL.Controller
             return jump;
         }
 
+
         /// TODO: Пока не знаю куда деть!!! 
 
         public int Row { get => Board.Rows; }
