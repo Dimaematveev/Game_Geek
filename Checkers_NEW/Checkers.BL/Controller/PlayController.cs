@@ -58,7 +58,7 @@ namespace Checkers.BL.Controller
             Board[24] = new SimpleCheckersCell(BlackPlayer, Pieces[0]);
 
 
-            Board[17] = new SimpleCheckersCell(WhitePlayer, Pieces[1]);
+            Board[17] = new SimpleCheckersCell(WhitePlayer, Pieces[0]);
             Board[2] = new SimpleCheckersCell(WhitePlayer, Pieces[1]);
         }
         /// <summary>

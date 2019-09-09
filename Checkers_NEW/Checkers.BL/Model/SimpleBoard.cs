@@ -191,7 +191,7 @@ namespace Checkers.BL.Model
             //{
             //    res.Add(GetPosition(row, column));
             //}
-            if (res.Count>1)
+            if (res.Count>0)
             {
                 return res;
             }
