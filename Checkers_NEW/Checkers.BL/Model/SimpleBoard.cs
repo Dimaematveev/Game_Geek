@@ -173,13 +173,13 @@ namespace Checkers.BL.Model
         /// <param name="column">Колонка</param>
         /// <param name="CurrentPlayer">Игрок.</param>
         /// <returns>Список ходов. Если нет то null. первый в списке откуда ходит</returns>
-        public List<int> GetJump(int row, int column, IPlayer CurrentPlayer)
+        public List<List<int>> GetJump(int row, int column, IPlayer CurrentPlayer)
         {
 
-            List<int> res = new List<int>();
+            List<List<int>> res = new List<List<int>>();
             if ((row + column) % 2 == 1 && this[row, column] != null && this[row, column].Player == CurrentPlayer)
             {
-                res.Add(GetPosition(row, column));
+                //res.Add(GetPosition(row, column));
                 ICheckersCell delBeginCheckersCell = this[row, column];
                 this[row, column] = null;
                 res.AddRange(IsJump(row, column, delBeginCheckersCell));
@@ -258,9 +258,9 @@ namespace Checkers.BL.Model
         /// <param name="column">Колонка</param>
         /// <param name="CurrentCheckersCell">Фигура и игрок который бьет.</param>
         /// <returns>True возможно false нет</returns>
-        private List<int> IsJump(int row, int column, ICheckersCell CurrentCheckersCell)
+        private List<List<int>> IsJump(int row, int column, ICheckersCell CurrentCheckersCell)
         {
-            List<int> res = new List<int>();
+            List<List<int>> res =new List<List<int>>();
             if ((row + column) % 2 == 1)
             {
                 foreach (var item in CurrentCheckersCell.Piece.HowMoves)
@@ -294,14 +294,40 @@ namespace Checkers.BL.Model
                     {
                         ICheckersCell enemyCheckersCell = this[row + changeRow, column + changeColumn];
                         this[row + changeRow, column + changeColumn] = null;
-                        res.Add(GetPosition(row + changeRow, column + changeColumn));
-                        res.AddRange(IsJump(row + 2 * changeRow, column + 2 * changeColumn, CurrentCheckersCell));
+                        var list = new List<int>();
+                        list.Add(GetPosition(row + changeRow, column + changeColumn));
+                        
+                        var jumps = IsJump(row + 2 * changeRow, column + 2 * changeColumn, CurrentCheckersCell);
+                        if (jumps == null) 
+                        {
+                            res.Add(list);
+                        }
+                        else
+                        {
+                            List<List<int>> temp1 = new List<List<int>>();
+                            
+                            foreach (var jum in jumps)
+                            {
+                                List<int> temp2 = new List<int>();
+                                temp2.Add( GetPosition(row + changeRow, column + changeColumn) );
+                                temp2.AddRange(jum);
+                                temp1.Add(temp2);
+                            }
+                            res.AddRange(temp1);
+                        }
+                       
+                        
+                        
                         this[row + changeRow, column + changeColumn] = enemyCheckersCell;
                         
                     }
                 }
             }
+            if (res.Count>0)
+            {
                 return res;
+            }
+            return null;
 
         }
         /// <summary>

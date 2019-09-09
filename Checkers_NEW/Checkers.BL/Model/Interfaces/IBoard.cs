@@ -84,7 +84,7 @@ namespace Checkers.BL.Model.Interfaces
         /// <param name="column">Колонка</param>
         /// <param name="CurrentPlayer">Игрок.</param>
         /// <returns>Список ходов.</returns>
-        List<int> GetJump(int row, int column, IPlayer CurrentPlayer);
+        List<List<int>> GetJump(int row, int column, IPlayer CurrentPlayer);
 
     }
 }

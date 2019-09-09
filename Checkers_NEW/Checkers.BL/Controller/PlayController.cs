@@ -41,8 +41,25 @@ namespace Checkers.BL.Controller
             };
             Pieces[1] = new SimplePiece("King", kingMove);
             BoardClear();
-            BoardIsFilling = BoardFilling(3);
+            ///TODO: Вернуть обратно
+            /// BoardIsFilling = BoardFilling(3);
+            ///
+            BoardFilingTest();
             CurrentPlayer = WhitePlayer;
+        }
+        private void BoardFilingTest()
+        {
+            Board[6] = new SimpleCheckersCell(BlackPlayer, Pieces[0]);
+            Board[14] = new SimpleCheckersCell(BlackPlayer, Pieces[0]);
+            Board[15] = new SimpleCheckersCell(BlackPlayer, Pieces[0]);
+            Board[16] = new SimpleCheckersCell(BlackPlayer, Pieces[0]);
+            Board[22] = new SimpleCheckersCell(BlackPlayer, Pieces[0]);
+            Board[23] = new SimpleCheckersCell(BlackPlayer, Pieces[0]);
+            Board[24] = new SimpleCheckersCell(BlackPlayer, Pieces[0]);
+
+
+            Board[17] = new SimpleCheckersCell(WhitePlayer, Pieces[1]);
+            Board[2] = new SimpleCheckersCell(WhitePlayer, Pieces[1]);
         }
         /// <summary>
         /// Заполнение Доски
@@ -136,9 +153,9 @@ namespace Checkers.BL.Controller
         /// Обязательные ходы  для текущего игрока. Прыжок
         /// </summary>
         /// <returns>Список Обязательных ходов. 1 элемент это откуда, остальные куда.</returns>
-        public List<List<int>> GetJump()
+        public List<List<List<int>>> GetJump()
         {
-            List<List<int>> jump = new List<List<int>>();
+            List<List<List<int>>> jump = new List<List<List<int>>>();
             for (int r = 1; r <= Board.Rows; r++)
             {
                 for (int c = 1; c <= Board.Columns; c++)
