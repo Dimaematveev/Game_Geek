@@ -153,9 +153,9 @@ namespace Checkers.BL.Controller
         /// Обязательные ходы  для текущего игрока. Прыжок
         /// </summary>
         /// <returns>Список Обязательных ходов. 1 элемент это откуда, остальные куда.</returns>
-        public List<List<List<int>>> GetJump()
+        public List<List<int>> GetJump()
         {
-            List<List<List<int>>> jump = new List<List<List<int>>>();
+            List<List<int>> jump = new List<List<int>>();
             for (int r = 1; r <= Board.Rows; r++)
             {
                 for (int c = 1; c <= Board.Columns; c++)
@@ -163,7 +163,7 @@ namespace Checkers.BL.Controller
                     var re = Board.GetJump(r, c, CurrentPlayer);
                     if (re != null)
                     {
-                        jump.Add(re);
+                        jump.AddRange(re);
                     }
                 }
             }

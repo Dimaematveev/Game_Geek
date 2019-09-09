@@ -182,7 +182,12 @@ namespace Checkers.BL.Model
                 //res.Add(GetPosition(row, column));
                 ICheckersCell delBeginCheckersCell = this[row, column];
                 this[row, column] = null;
-                res.AddRange(IsJump(row, column, delBeginCheckersCell));
+                var temp = IsJump(row, column, delBeginCheckersCell);
+                if (temp!=null)
+                {
+                    res.AddRange(temp);
+                }
+               
                 this[row, column] = delBeginCheckersCell;
             }
             
@@ -294,27 +299,34 @@ namespace Checkers.BL.Model
                     {
                         ICheckersCell enemyCheckersCell = this[row + changeRow, column + changeColumn];
                         this[row + changeRow, column + changeColumn] = null;
+
+
                         var list = new List<int>();
-                        list.Add(GetPosition(row + changeRow, column + changeColumn));
+                        list.Add(GetPosition(row, column ));
+                        list.Add(GetPosition(row + 2 * changeRow, column + 2 * changeColumn));
                         
                         var jumps = IsJump(row + 2 * changeRow, column + 2 * changeColumn, CurrentCheckersCell);
-                        if (jumps == null) 
+                       
+                           
+                        
+                        List<List<int>> temp1 = new List<List<int>>();
+                        if (jumps!=null)
                         {
-                            res.Add(list);
-                        }
-                        else
-                        {
-                            List<List<int>> temp1 = new List<List<int>>();
-                            
                             foreach (var jum in jumps)
                             {
                                 List<int> temp2 = new List<int>();
-                                temp2.Add( GetPosition(row + changeRow, column + changeColumn) );
+                                temp2.Add(GetPosition(row , column ));
                                 temp2.AddRange(jum);
                                 temp1.Add(temp2);
                             }
                             res.AddRange(temp1);
                         }
+                        else
+                        {
+                            res.Add(list);
+                        }
+                            
+                        
                        
                         
                         

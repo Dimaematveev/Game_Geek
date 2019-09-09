@@ -21,22 +21,47 @@ namespace Checkers.CMD
                 //список(список где 0 элемент откуда должно движени, а дальше куда)
                 var Jump = playController.GetJump();
 
-                //Список всех возможных фигуг двигающиеся
-                var Posit = Pos.ConvertAll(p => p[0]);
-                //Список все возможных движений
-                var Jumpt = Jump.Select(j => j[0]);
 
+
+                List<int> Posit;
                 Console.WriteLine();
                 Draw(playController);
-                Console.WriteLine("Введи откуда пойдешь");
+                if (Jump != null)
+                {
+                    Console.WriteLine("Должен бить:");
+                    Posit = Jump.ConvertAll(j => j[0]);
+                }
+                else
+                {
+                    Console.WriteLine("Введи откуда пойдешь:");
+                    Posit = Pos.ConvertAll(p => p[0]);
+                }
+
+                ////Список всех возможных фигуг двигающиеся
+                //var Posit = Pos.ConvertAll(p => p[0]);
+                ////Список все возможных движений
+                //var Jumpt = Jump.ConvertAll(j => j[0]);
+
                 int pos;
                 while (!int.TryParse(Console.ReadLine(),out pos) || !Posit.Contains(pos))
                 {
                     Console.WriteLine("Неверно");
                 }
                 //Список все возможных движений
-                var Positio = Pos.Find(p=>p[0]==pos).Skip(1);
-                Console.WriteLine("Введи куда пойдешь");
+                //var Positio = Pos.Find(p=>p[0]==pos).Skip(1);
+
+                List<int> Positio;
+                if (Jump != null)
+                {
+                    Console.WriteLine("Введи кого будешь бить пойдешь");
+                    Positio = Jump.FindAll(j => j[0] == pos).Select(j => j[1]).ToList();
+                }
+                else
+                {
+                    Console.WriteLine("Введи куда пойдешь");
+                    Positio = Pos.Find(p => p[0] == pos).Skip(1).ToList();
+                }
+                
                 int posnew;
                 while(!int.TryParse(Console.ReadLine(), out posnew) || !Positio.Contains(posnew))
                 {
