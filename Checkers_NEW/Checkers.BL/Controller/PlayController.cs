@@ -41,8 +41,25 @@ namespace Checkers.BL.Controller
             };
             Pieces[1] = new SimplePiece("King", kingMove);
             BoardClear();
-            BoardIsFilling = BoardFilling(3);
+            ///TODO: Вернуть обратно
+            /// BoardIsFilling = BoardFilling(3);
+            ///
+            BoardFilingTest();
             CurrentPlayer = WhitePlayer;
+        }
+        private void BoardFilingTest()
+        {
+            Board[6] = new SimpleCheckersCell(BlackPlayer, Pieces[0]);
+            Board[14] = new SimpleCheckersCell(BlackPlayer, Pieces[0]);
+            Board[15] = new SimpleCheckersCell(BlackPlayer, Pieces[0]);
+            Board[16] = new SimpleCheckersCell(BlackPlayer, Pieces[0]);
+            Board[22] = new SimpleCheckersCell(BlackPlayer, Pieces[0]);
+            Board[23] = new SimpleCheckersCell(BlackPlayer, Pieces[0]);
+            Board[24] = new SimpleCheckersCell(BlackPlayer, Pieces[0]);
+
+
+            Board[17] = new SimpleCheckersCell(WhitePlayer, Pieces[0]);
+            Board[2] = new SimpleCheckersCell(WhitePlayer, Pieces[1]);
         }
         /// <summary>
         /// Заполнение Доски
@@ -146,7 +163,7 @@ namespace Checkers.BL.Controller
                     var re = Board.GetJump(r, c, CurrentPlayer);
                     if (re != null)
                     {
-                        jump.Add(re);
+                        jump.AddRange(re);
                     }
                 }
             }
