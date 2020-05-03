@@ -14,14 +14,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Main
+namespace WelcomeWindow
 {
     /// <summary>
     /// Логика взаимодействия для MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class Welcome : Window
     { 
-        public MainWindow()
+        public Welcome()
         {
             InitializeComponent();
             Enter.Click += Enter_Click;
@@ -67,12 +67,12 @@ namespace Main
             try
             {
                 User user = new User(UserName.Text);
+                MessageBox.Show($"Здравствуй {user.Name}!");
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
-            
         }
     }
 }
