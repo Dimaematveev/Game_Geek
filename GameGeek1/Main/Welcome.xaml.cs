@@ -1,4 +1,5 @@
 ﻿using GameGeek.BL;
+using MainMenu;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -68,6 +69,9 @@ namespace WelcomeWindow
             {
                 User user = new User(UserName.Text);
                 MessageBox.Show($"Здравствуй {user.Name}!");
+                MainWindow mainWindow = new MainWindow(user);
+                mainWindow.Show();
+                Close();
             }
             catch (Exception ex)
             {

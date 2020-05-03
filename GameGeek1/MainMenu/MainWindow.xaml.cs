@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GameGeek.BL;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +21,16 @@ namespace MainMenu
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow()
+        User Player;
+        public MainWindow(User player)
         {
+            if (player == null) 
+            {
+                throw new ArgumentNullException(nameof(player), $"Пользователь не должен быть null!!!");
+            }
+            Player = player;
             InitializeComponent();
+
         }
     }
 }

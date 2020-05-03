@@ -99,6 +99,10 @@
       <Project>{0742e7ff-e8d1-4bcf-838b-26c421098892}</Project>
       <Name>GameGeek.BL</Name>
     </ProjectReference>
+    <ProjectReference Include="..\MainMenu\MainMenu.csproj">
+      <Project>{A761E918-FDCF-42A2-9977-CD84538AA40D}</Project>
+      <Name>MainMenu</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
