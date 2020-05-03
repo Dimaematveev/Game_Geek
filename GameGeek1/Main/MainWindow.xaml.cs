@@ -25,11 +25,54 @@ namespace Main
         {
             InitializeComponent();
             Enter.Click += Enter_Click;
+            UserName.MaxLength = User.MaxNameLength;
+            UserName.TextChanged += UserName_TextChanged;
         }
 
+        /// <summary>
+        /// Изменение имени пользователя
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UserName_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox textBox = (TextBox)sender;
+            foreach (var changeItem in e.Changes)
+            {
+                if (changeItem.AddedLength>0)
+                {
+                    //Изменения
+                    string addString = textBox.Text.Substring(changeItem.Offset, changeItem.AddedLength);
+                    foreach (var ch in addString)
+                    {
+                        if (!User.IsSymbolAllowed(ch)) 
+                        {
+                            textBox.Text = textBox.Text.Replace(ch.ToString(), "");
+                        }
+                    }
+                }
+                
+            }
+            
+            
+        }
+
+        /// <summary>
+        /// Нажатие кнопки войти. 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Enter_Click(object sender, RoutedEventArgs e)
         {
-            User user = new User(UserName.Text);
+            try
+            {
+                User user = new User(UserName.Text);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            
         }
     }
 }
