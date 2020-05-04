@@ -5,36 +5,70 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MainMenu"
         mc:Ignorable="d"
-        Title="MainWindow" Height="370" Width="443.673">
+        Title="MainWindow" Height="370" Width="420">
 
     <WrapPanel x:Name="MainWrapPanel" Orientation="Horizontal">
-        <TextBlock x:Name="DateTimeText"  Width="410" />
-
-        <StackPanel x:Name="PlayerStackPanel" DataContext="Player"  Orientation="Vertical" Width="150">
-            <TextBlock Text="Игрок:" Foreground="Red"/>
-            <TextBlock>
-                <Run>Имя:</Run>
-                <!-- <Run x:Name="NamePlayers"  DataContext="{Binding Player}" Text="{Binding Name}" ></Run>-->
-                <Run x:Name="NamePlayers" Text="{Binding Name}"></Run>
-            </TextBlock>
-            <TextBlock >
-                <Run>Деньги:</Run>
-                <Run x:Name="MoneyPlayers" ></Run>
-            </TextBlock>
-        </StackPanel>
-        
-        <StackPanel x:Name="ThingsStackPanel" DataContext="Player"  Orientation="Vertical" Width="150">
-            <TextBlock Text="Вещи:" Foreground="Red"/>
-        </StackPanel>
-        <StackPanel x:Name="ComputerStackPanel" DataContext="Player"  Orientation="Vertical" Width="150">
-            <TextBlock Text="Компьютер:" Foreground="Red"/>
-        </StackPanel>
-        <StackPanel x:Name="ProgramStackPanel" DataContext="Player"  Orientation="Vertical" Width="150">
-            <TextBlock Text="Программы:" Foreground="Red"/>
-        </StackPanel>
-        <StackPanel x:Name="WorkStackPanel" DataContext="Player"  Orientation="Vertical" Width="150">
-            <TextBlock Text="Работа:" Foreground="Red"/>
-        </StackPanel>
+        <TextBlock x:Name="DateTimeText"  Width="410" Text="Date: Time:"/>
+        <Grid Width="150">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="50"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Text="Игрок:" Foreground="Red"/>
+            <TextBlock Grid.Row="1" Grid.Column="0" Text="Имя:"/>
+            <TextBlock Grid.Row="1" Grid.Column="1" x:Name="NamePlayers"/>
+            <TextBlock Grid.Row="2" Grid.Column="0" Text="Деньги:"/>
+            <TextBlock Grid.Row="2" Grid.Column="1" x:Name="MoneyPlayers"/>
+        </Grid>
+        <Grid Width="150">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="50"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Text="Вещи:" Foreground="Red"/>
+        </Grid>
+        <Grid Width="150">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="50"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+            <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Text="Компьютер:" Foreground="Red"/>
+        </Grid>
+        <Grid Width="150">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="50"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Text="Программы:" Foreground="Red"/>
+        </Grid>
+        <Grid Width="150">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="50"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Text="Работа:" Foreground="Red"/>
+        </Grid>
     </WrapPanel>
     
 </Window>
