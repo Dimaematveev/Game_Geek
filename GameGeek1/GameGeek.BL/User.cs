@@ -13,11 +13,30 @@ namespace GameGeek.BL
         /// <summary> Максимальное кол-во символов в имени </summary>   
         private readonly static int maxNameLength = 20;
         /// <summary>  Имя пользователя  </summary>
-        public string Name { get; private set; }
+        private readonly string name;
+
+
+
+        /// <summary>
+        /// Делегат для события
+        /// </summary>
+        /// <param name="message"></param>
+        public delegate void AccountHandler(string message);
+
+        /// <summary>
+        /// // 1.Определение события
+        /// Количество денег изменено
+        /// </summary>
+        public event AccountHandler NotifyAmountOfMoneyChanged;              
+        /// <summary> Кол-во денег </summary>
+        public int Money { get; private set; }
+
         /// <summary>  Разрешенные символы в имени  </summary>
         public static string AllowedSymbolsInName => allowedSymbolsInName;
         /// <summary> Максимальное кол-во символов в имени </summary>
         public static int MaxNameLength => maxNameLength;
+        /// <summary>  Имя пользователя  </summary>
+        public string Name => name;
 
         public User(string name)
         {
@@ -33,7 +52,8 @@ namespace GameGeek.BL
             {
                 throw new ArgumentException(nameof(name), $"Имя пользователя: [{name}], количество символов не должно быть больше {MaxNameLength}, у вас {name.Length}!");
             }
-            Name = name;
+            this.name = name;
+            Money = 100;
         }
 
         /// <summary>
@@ -56,23 +76,40 @@ namespace GameGeek.BL
             return str.All(x => IsSymbolAllowed(x));
         }
 
+        /// <summary>
+        /// Изменение кол-во денег
+        /// </summary>
+        /// <param name="edit"></param>
+        public void EditMoney(int edit)
+        {
+            Money += edit; 
+            NotifyAmountOfMoneyChanged?.Invoke($"Изменено кол-во денег на счету на {edit}!");
+        }
+
+
+
         public override string ToString()
         {
-            return Name;
+            return $"Name:{Name}, Money:{Money}";
         }
 
         public override bool Equals(object obj)
         {
             if (obj is User objUser)
             {
-                return objUser.Name.Equals(Name);
+                bool res = true;
+                res= res&& objUser.Name.Equals(Name);
+                res= res&& objUser.Money.Equals(Money);
+
+                return res;
             }
             return false;
         }
 
         public override int GetHashCode()
         {
-            return Name.GetHashCode();
+            int hash =  Name.ToString().GetHashCode();
+            return hash;
         }
     }
 }
