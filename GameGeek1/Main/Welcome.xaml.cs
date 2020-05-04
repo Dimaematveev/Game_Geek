@@ -28,6 +28,10 @@ namespace WelcomeWindow
             Enter.Click += Enter_Click;
             UserName.MaxLength = User.MaxNameLength;
             UserName.TextChanged += UserName_TextChanged;
+
+            //Todo:Потом удалить как и авто имя
+            UserName.Text = "Dima";
+            Enter_Click(Enter, new RoutedEventArgs());
         }
 
         /// <summary>

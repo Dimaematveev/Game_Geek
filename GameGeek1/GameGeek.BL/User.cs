@@ -17,19 +17,15 @@ namespace GameGeek.BL
 
 
 
-        /// <summary>
-        /// Делегат для события
-        /// </summary>
+        /// <summary> Делегат для события</summary>
         /// <param name="message"></param>
         public delegate void AccountHandler(string message);
 
-        /// <summary>
-        /// // 1.Определение события
-        /// Количество денег изменено
-        /// </summary>
+        /// <summary> Количество денег изменено. Событие </summary>
         public event AccountHandler NotifyAmountOfMoneyChanged;              
         /// <summary> Кол-во денег </summary>
         public int Money { get; private set; }
+
 
         /// <summary>  Разрешенные символы в имени  </summary>
         public static string AllowedSymbolsInName => allowedSymbolsInName;
@@ -38,6 +34,11 @@ namespace GameGeek.BL
         /// <summary>  Имя пользователя  </summary>
         public string Name => name;
 
+
+        /// <summary>
+        /// Конструктор
+        /// </summary>
+        /// <param name="name"></param>
         public User(string name)
         {
             if (string.IsNullOrWhiteSpace(name))
@@ -88,11 +89,14 @@ namespace GameGeek.BL
 
 
 
+
+
+        //ToDO:Не тестировал
         public override string ToString()
         {
             return $"Name:{Name}, Money:{Money}";
         }
-
+        //ToDO:Не тестировал
         public override bool Equals(object obj)
         {
             if (obj is User objUser)
@@ -105,7 +109,7 @@ namespace GameGeek.BL
             }
             return false;
         }
-
+        //ToDO:Не тестировал
         public override int GetHashCode()
         {
             int hash =  Name.ToString().GetHashCode();

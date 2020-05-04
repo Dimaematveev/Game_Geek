@@ -25,7 +25,7 @@ namespace MainMenu
             Player.NotifyAmountOfMoneyChanged += Player_NotifyAmountOfMoneyChanged;
             var timer = new DispatcherTimer();
             timer.Tick += new EventHandler(OnTimedEvent);
-            timer.Interval = new TimeSpan(0, 0, 1);
+            timer.Interval = new TimeSpan(0, 0, 0, 0, 100);
             timer.Start();
             Loaded += MainWindow_Loaded;
 
@@ -34,9 +34,14 @@ namespace MainMenu
 
         private void OnTimedEvent(object obj, EventArgs e)
         {
-            NowDateTime= NowDateTime.AddHours(1);
+            
+            if (NowDateTime.AddHours(1).Date > NowDateTime.Date)
+            {
+                Player.EditMoney(100);
+            }
+            NowDateTime = NowDateTime.AddHours(1);
             DateTimeText.BeginInit();
-            Player.EditMoney(1);
+            
             DateTimeText.Text = $"Date: {NowDateTime.ToShortDateString()} Time: {NowDateTime.ToShortTimeString()}";
             DateTimeText.EndInit();
         }

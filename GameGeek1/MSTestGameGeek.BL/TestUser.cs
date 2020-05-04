@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection;
 using GameGeek.BL;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -35,7 +36,8 @@ namespace MSTestGameGeek.BL
         {
             User user = new User(name);
 
-            Assert.AreEqual(name,user.Name);
+            Assert.AreEqual(user.Name, name);
+            Assert.AreEqual(user.Money, 100);
         }
 
 
@@ -123,6 +125,48 @@ namespace MSTestGameGeek.BL
         public void IsSymbolAllowed_SymbolIsAllowed_False(char ch)
         {
             Assert.IsFalse(User.IsSymbolAllowed(ch));
+        }
+
+
+        /// <summary>
+        /// Проверяем максимальная длинна имени 20
+        /// </summary>
+        [TestMethod]
+        public void IsMaxNameLength20_MaxNameLength_True()
+        {
+            Assert.AreEqual(User.MaxNameLength, 20);
+        }
+
+        /// <summary>
+        /// Проверяем разрешенные символы
+        /// </summary>
+        [TestMethod]
+        public void IsAllowedSymbolsInName_AllowedSymbolsInName_True()
+        {
+            Assert.AreEqual(User.AllowedSymbolsInName, "abcdefghijklmnopqrstuvwxyzабвгдеёжзийклмнопрстуфхцчшщъыьэюя0123456789 ");
+        }
+
+        /// <summary>
+        /// Проверяем Изменение кол-во денег и сработку События
+        /// </summary>
+        [DataTestMethod]
+        [DataRow(50)]
+        [DataRow(100)]
+        [DataRow(129)]
+        [DataRow(-400)]
+        public void IsEditMoneyAndEvensNotifyAmountOfMoneyChanged_EditMoney_True(int edit)
+        {
+            bool called = false;
+            User user = new User("Daad");
+            user.NotifyAmountOfMoneyChanged += (str) => called = true;
+            user.EditMoney(edit);
+
+
+
+            // assert
+            Assert.AreEqual(user.Money, 100+edit);
+            Assert.IsTrue(called,$"called будет True если вызовется событие изменения кол-ва денег, сейчас called={called}");
+
         }
     }
 }
