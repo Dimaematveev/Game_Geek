@@ -53,7 +53,7 @@ namespace CardGame_GoFish.Cons
             Console.WriteLine();
             #endregion
 
-            #region Игроки с первоначальным кол-вом карт, и вывод оставшегося бассейна
+            #region Игроки с первоначальным кол-вом карт, и вывод оставшегося бассейна, Счет каждого игрока.
             //Кол-во игроков
             int countPlayer = 2;
             //Кол-во карт
@@ -63,10 +63,14 @@ namespace CardGame_GoFish.Cons
                 countCard = 5;
             }
 
+            //Счет игроков
+            int[] playersScore = new int[countPlayer];
+            //Карты игроков
             List<string>[] playersCards = new List<string>[countPlayer];
             for (int i = 0; i < countPlayer; i++)
             {
                 playersCards[i] = new List<string>();
+                playersScore[i] = 0;
             }
 
             for (int i = 0; i < countCard; i++) 
@@ -99,6 +103,7 @@ namespace CardGame_GoFish.Cons
             }
             Console.WriteLine();
             #endregion
+
 
 
 
