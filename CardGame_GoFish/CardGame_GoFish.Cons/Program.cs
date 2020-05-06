@@ -104,6 +104,21 @@ namespace CardGame_GoFish.Cons
             Console.WriteLine();
             #endregion
 
+            #region Первоначальная проверка На 4 одинаковые карты
+            for (int i = 0; i < countPlayer; i++)
+            {
+                var fourCards = playersCards[i].GroupBy(x => x).Where(x => x.Count() == 4).ToList();
+                if (fourCards != null && fourCards.Count != 0)
+                {
+                    foreach (var item in fourCards)
+                    {
+                        playersCards[i].RemoveAll(x=>x.Equals(item.Key));
+                        playersScore[i]++;
+                    }
+                }
+            }
+            #endregion
+
 
 
 
