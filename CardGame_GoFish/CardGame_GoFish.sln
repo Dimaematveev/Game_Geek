@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30011.22
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CardGame_GoFish.Cons", "CardGame_GoFish.Cons\CardGame_GoFish.Cons.csproj", "{A8059E84-BD88-4B69-BF48-EE2C997480BC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CardGame_GoFish.BL", "CardGame_GoFish.BL\CardGame_GoFish.BL.csproj", "{1177FDC4-EFD8-4E3A-BBA4-D6BB97230D56}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A8059E84-BD88-4B69-BF48-EE2C997480BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A8059E84-BD88-4B69-BF48-EE2C997480BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A8059E84-BD88-4B69-BF48-EE2C997480BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A8059E84-BD88-4B69-BF48-EE2C997480BC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1177FDC4-EFD8-4E3A-BBA4-D6BB97230D56}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1177FDC4-EFD8-4E3A-BBA4-D6BB97230D56}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1177FDC4-EFD8-4E3A-BBA4-D6BB97230D56}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1177FDC4-EFD8-4E3A-BBA4-D6BB97230D56}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1E672567-8923-45E0-8BE8-0BEEDE61C0BB}
+	EndGlobalSection
+EndGlobal
