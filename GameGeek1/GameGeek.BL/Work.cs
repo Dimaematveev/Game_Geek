@@ -32,19 +32,19 @@ namespace GameGeek.BL
         {
             if (string.IsNullOrWhiteSpace(name))
             {
-                throw new ArgumentNullException(nameof(name), $"Название работы: [{name}], не должно быть пустым или содержать только символы разделители!");
+                throw new ArgumentNullException(nameof(Name), $"Название работы: [{name}], не должно быть пустым или содержать только символы разделители!");
             }
             if (!IsSymbolAllowed(name))
             {
-                throw new ArgumentException(nameof(name), $"Названии работы : [{name}], содержит неразрешенные символы! Список разрешенных: [{AllowedSymbolsInName}]!");
+                throw new ArgumentException($"Названии работы : [{name}], содержит неразрешенные символы! Список разрешенных: [{AllowedSymbolsInName}]!", nameof(Name));
             }
             if (name.Length > MaxNameLength)
             {
-                throw new ArgumentException(nameof(name), $"Названии работы : [{name}], количество символов не должно быть больше {MaxNameLength}, у вас {name.Length}!");
+                throw new ArgumentException($"Названии работы : [{name}], количество символов не должно быть больше {MaxNameLength}, у вас {name.Length}!", nameof(Name));
             }
-            if (salaryToDay < 0) 
+            if (salaryToDay <= 0) 
             {
-                throw new ArgumentException(nameof(salaryToDay), $"Зарплата за 1 день: [{salaryToDay}], должна быть не меньше 0!");
+                throw new ArgumentException($"Зарплата за 1 день: [{salaryToDay}], должна быть не меньше 0!", nameof(SalaryToDay));
             }
             this.name = name;
             this.salaryToDay = salaryToDay;

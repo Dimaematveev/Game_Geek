@@ -56,10 +56,8 @@ namespace MainMenu
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
             DateTimeText.Text = $"Date: {NowDateTime.ToShortDateString()} Time: {NowDateTime.ToShortTimeString()}";
-            //NamePlayers.Text = Player.Name;
             NamePlayers.Text = Player.Name;
             MoneyPlayers.Text = Player.Money.ToString();
-            //MoneyPlayers.Text = Player.Money.ToString();
         }
     }
 }

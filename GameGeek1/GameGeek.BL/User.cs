@@ -43,15 +43,15 @@ namespace GameGeek.BL
         {
             if (string.IsNullOrWhiteSpace(name))
             {
-                throw new ArgumentNullException(nameof(name),$"Имя пользователя: [{name}], не должно быть пустым или содержать только символы разделители!");
+                throw new ArgumentNullException(nameof(Name), $"Имя пользователя: [{name}], не должно быть пустым или содержать только символы разделители!");
             }
             if (!IsSymbolAllowed(name))
             {
-                throw new ArgumentException(nameof(name), $"Имя пользователя: [{name}], содержит неразрешенные символы! Список разрешенных: [{AllowedSymbolsInName}]!");
+                throw new ArgumentException($"Имя пользователя: [{name}], содержит неразрешенные символы! Список разрешенных: [{AllowedSymbolsInName}]!", nameof(Name));
             }
             if (name.Length > MaxNameLength)
             {
-                throw new ArgumentException(nameof(name), $"Имя пользователя: [{name}], количество символов не должно быть больше {MaxNameLength}, у вас {name.Length}!");
+                throw new ArgumentException($"Имя пользователя: [{name}], количество символов не должно быть больше {MaxNameLength}, у вас {name.Length}!", nameof(Name));
             }
             this.name = name;
             Money = 100;
