@@ -14,6 +14,11 @@ namespace MainMenu
     {
         private DateTime NowDateTime = DateTime.Now.Date;
         private User Player;
+        private Work[] works = new Work[]
+        {
+            new Work("Пособие по безработице", 10),
+            new Work("Программист", 100),
+        };
         public MainWindow(User player)
         {
             if (player == null) 

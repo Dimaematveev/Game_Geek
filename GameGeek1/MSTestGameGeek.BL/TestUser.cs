@@ -1,7 +1,6 @@
-﻿using System;
-using System.Reflection;
-using GameGeek.BL;
+﻿using GameGeek.BL;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 
 namespace MSTestGameGeek.BL
 {
