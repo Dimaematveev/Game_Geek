@@ -65,7 +65,8 @@ namespace CardGame_GoFish.Cons
 
             //Счет игроков
             int[] playersScore = new int[countPlayer];
-            //Карты игроков
+
+            // Карты игроков
             List<string>[] playersCards = new List<string>[countPlayer];
             for (int i = 0; i < countPlayer; i++)
             {
@@ -119,6 +120,68 @@ namespace CardGame_GoFish.Cons
             }
             #endregion
 
+            #region ходы игроков
+            for (int i = 0; i < countPlayer; i++)
+            {
+                Console.WriteLine("Напишите карту которую хотите спросить из:");
+                Console.Write("\t");
+                //Различные карты с количеством
+                var variousCards = playersCards[i].GroupBy(x => x).ToList();
+                foreach (var card in variousCards)
+                {
+                    Console.Write($"{card.Key}, ");
+                }
+                Console.WriteLine();
+                Console.WriteLine();
+                //Карту которую спрашивает игрок
+                string asksThatCard="";
+                while (true)
+                {
+                    string rdl = Console.ReadLine();
+                    if (variousCards.Select(x => x.Key).Contains(rdl)) 
+                    {
+                        asksThatCard = rdl;
+                        break;
+                    }
+                    Console.WriteLine("Нет такой карты у вас! Введите еще раз!!");
+                }
+                Console.WriteLine();
+                Console.WriteLine("Напишите номер игрока у которого хотите спросить из:");
+                Console.Write("\t");
+                for (int j = 0; j < countPlayer; j++) 
+                {
+                    if (i != j)
+                    {
+                        Console.Write($"{j}, ");
+                    }
+                }
+                Console.WriteLine();
+                Console.WriteLine();
+                //Индекс игрока у которого спрашивается карта
+                int indPlayer = -1;
+                while (true)
+                {
+                    if (int.TryParse(Console.ReadLine(), out indPlayer)) 
+                    {
+                        if (indPlayer == i) 
+                        {
+                            Console.WriteLine("Вы не можете спросить у себя!!! Введите еще раз!!"); 
+                            continue;
+                        }
+                        if (indPlayer < 0 || indPlayer >= countPlayer) 
+                        {
+                            Console.WriteLine("Нет такого игрока!!! Введите еще раз!!");
+                            continue;
+                        }
+
+                        break;
+                    }
+                    Console.WriteLine("Это не число!!! Введите еще раз!!");
+                }
+                Console.WriteLine();
+
+            }
+            #endregion
 
 
 
