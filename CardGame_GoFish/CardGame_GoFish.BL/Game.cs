@@ -90,6 +90,8 @@ namespace CardGame_GoFish.BL
         /// Начать игру!  Begin game
         /// </summary>
         /// <param name="firstPlayer">Кто первый ходит. Who is the first to walk. </param>
+        /// <param name="fAsksThatCard">Функция  Получить Карту которую будем спрашивать. Get the card we will ask </param>
+        /// <param name="fIndPlayer">Функция Получить индекс игрока у которого будем спрашивать. Get the index of the player we will ask </param>
         /// <returns>Выводит всех игроков с максимальным счетом. Outer all players with max count.</returns>
         public List<int> BeginGame(int firstPlayer, Func<Game, string> fAsksThatCard, Func<Game, int> fIndPlayer)
         {
@@ -110,29 +112,13 @@ namespace CardGame_GoFish.BL
             return GameOver();
         }
 
-        /// <summary>
-        /// Ищет всех игроков с максимальным счетом. 
-        /// Find all players with max count
-        /// </summary>
-        /// <returns>Выводит всех игроков с максимальным счетом. Outer all players with max count.</returns>
-        private List<int> GameOver()
-        {
-            int maxScore = PlayersScore.Max();
-            List<int> winPlayer = new List<int>();
-            for (int i = 0; i < CountPlayer; i++)
-            {
-                if (PlayersScore[i]== maxScore)
-                {
-                    winPlayer.Add(i);
-                }
-            }
-
-            return winPlayer;
-        }
+        
 
         /// <summary>
         /// Один ход. One move
         /// </summary>
+        /// <param name="fAsksThatCard">Функция  Получить Карту которую будем спрашивать. Get the card we will ask </param>
+        /// <param name="fIndPlayer">Фукция Получить индекс игрока у которого будем спрашивать. Get the index of the player we will ask </param>
         private void OneMove(Func<Game,string> fAsksThatCard, Func<Game, int> fIndPlayer)
         {
             Console.WriteLine($"Ход {CurrentPlayer} Игрока!");
@@ -172,13 +158,16 @@ namespace CardGame_GoFish.BL
             }
 
 
-            //Если их 4 то счет++ и сброс. if you have 4 equal card then score++ and put cards
-            foreach (var item in PlayersCards[CurrentPlayer].GroupBy(x => x).Where(x => x.Count() == 4))
+            
+            var equalCard =  CheckFor4EqualCardOnePlayer();
+            foreach (var item in equalCard)
             {
-                PlayersScore[CurrentPlayer]++;
-                Console.WriteLine($"Вы имеете 4 одинаковых карты {item.Key}. Теперь ваш счет {PlayersScore[CurrentPlayer]}");//if you have 4 equal card ... Now you score
-                PlayersCards[CurrentPlayer].RemoveAll(x => x.Equals(item.Key));
+                Console.Write($"Вы имеете 4 одинаковых карты {item}. " );//if you have 4 equal card ...
             }
+            Console.WriteLine();
+            Console.WriteLine($"Теперь ваш счет {PlayersScore[CurrentPlayer]}");// Now you score
+
+
 
 
             Console.WriteLine($"Имеете Карты :");//Have cards
@@ -195,10 +184,33 @@ namespace CardGame_GoFish.BL
             }
         }
 
+
+        /// <summary>
+        /// Ищет всех игроков с максимальным счетом. 
+        /// Find all players with max count
+        /// </summary>
+        /// <returns>Выводит всех игроков с максимальным счетом. Outer all players with max count.</returns>
+        private List<int> GameOver()
+        {
+            int maxScore = PlayersScore.Max();
+            List<int> winPlayer = new List<int>();
+            for (int i = 0; i < CountPlayer; i++)
+            {
+                if (PlayersScore[i] == maxScore)
+                {
+                    winPlayer.Add(i);
+                }
+            }
+
+            return winPlayer;
+        }
+
+
+
+
         /// <summary>
         /// Получить все различные карты игрока. Get all various cards the player
         /// </summary>
-        /// <param name="i">Текущий игрок. Current Player</param>
         public string[] GetCardsYouCanAsk()
         {
             return PlayersCards[CurrentPlayer].GroupBy(x => x).Select(x => x.Key).ToArray();
@@ -206,7 +218,6 @@ namespace CardGame_GoFish.BL
         /// <summary>
         /// Получить индексы игроков у которых можно спросить. Get the index of the players you can ask
         /// </summary>
-        /// <param name="i">Номер текущего игрока. number current player</param>
         public int[] GetIndPlayers()
         {
             List<int> insPlayers = new List<int>();
@@ -241,14 +252,17 @@ namespace CardGame_GoFish.BL
         /// Проверка на 4 одинаковых карты. Один игрок
         /// Check for 4 identical cards. One player
         /// </summary>
-        /// <param name="i">Номер игрока. Number player</param>
-        public void CheckFor4EqualCardOnePlayer(int i)
+        /// <returns>Выводит все кары которые были удалены. Outer all equals card = 4</returns>
+        public string[] CheckFor4EqualCardOnePlayer()
         {
-            foreach (var item in PlayersCards[i].GroupBy(x => x).Where(x => x.Count() == 4))
+            List<string> cards = new List<string>();
+            foreach (var item in PlayersCards[CurrentPlayer].GroupBy(x => x).Where(x => x.Count() == 4))
             {
-                PlayersScore[i]++;
-                PlayersCards[i].RemoveAll(x => x.Equals(item.Key));
+                cards.Add(item.Key);
+                PlayersScore[CurrentPlayer]++;
+                PlayersCards[CurrentPlayer].RemoveAll(x => x.Equals(item.Key));
             }
+            return cards.ToArray();
         }
 
         /// <summary>
@@ -257,11 +271,13 @@ namespace CardGame_GoFish.BL
         /// </summary>
         public void CheckFor4EqualCardAllPlayer()
         {
+            int curPl = CurrentPlayer;
             for (int i = 0; i < CountPlayer; i++)
             {
-                CheckFor4EqualCardOnePlayer(i);
+                CurrentPlayer = 0;
+                CheckFor4EqualCardOnePlayer();
             }
-            
+            CurrentPlayer = curPl;
         }
 
     }
