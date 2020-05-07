@@ -128,9 +128,17 @@ namespace CardGame_GoFish.Cons
             #endregion
 
             #region Победа. win
+            
             int maxScore = playersScore.Max();
-            var win = playersScore.Where(x => x.Equals(maxScore));
-            if (win.Count() > 1) 
+            List<int> winPlayer = new List<int>();
+            for (int i = 0; i < countPlayer; i++)
+            {
+                if (playersScore[i] == maxScore)
+                {
+                    winPlayer.Add(i);
+                }
+            }
+            if (winPlayer.Count() > 1) 
             {
                 Console.WriteLine("Победу разделили:");//Victory shared
             }
@@ -138,7 +146,7 @@ namespace CardGame_GoFish.Cons
             {
                 Console.WriteLine("Выиграл:");//won
             }
-            foreach (var item in win)
+            foreach (var item in winPlayer)
             {
                 Console.WriteLine($"\tИгрок {item} со счетом {maxScore}!"); //Player item with score maxScore
             }
