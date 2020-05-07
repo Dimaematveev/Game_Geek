@@ -80,7 +80,7 @@ namespace CardGame_GoFish.Cons
                 for (int i = 0; i < game.CountPlayer; i++)
                 {
                     game.CurrentPlayer = i;
-                    OneMove(game,game.PlayersScore, game.PlayersCards, game.Pool);
+                    OneMove(game);
                 }
             }
             #endregion
