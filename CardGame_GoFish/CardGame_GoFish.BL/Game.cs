@@ -29,6 +29,8 @@ namespace CardGame_GoFish.BL
         public List<string>[] PlayersCards;
         //Кол-во игроков -  count Player
         public int CountPlayer { get => PlayersCards.Length; }
+        //Текущий игрок
+        public int CurrentPlayer { get; set; }
 
         public Game()
         {
@@ -93,13 +95,15 @@ namespace CardGame_GoFish.BL
         {
             for (int i = firstPlayer; i < CountPlayer; i++)
             {
-                OneMove(PlayersScore, PlayersCards, i, Pool);
+                CurrentPlayer = i;
+                OneMove();
             }
             while (PlayersScore.Sum() < 13)
             {
                 for (int i = 0; i < CountPlayer; i++)
                 {
-                    OneMove(PlayersScore, PlayersCards, i, Pool);
+                    CurrentPlayer = i;
+                    OneMove();
                 }
             }
 
@@ -130,11 +134,37 @@ namespace CardGame_GoFish.BL
         /// Один ход. One move
         /// </summary>
         /// <param name="i">Номер текущего игрока</param>
-        private void OneMove(int i)
+        private void OneMove()
         {
 
             throw new NotImplementedException();
         }
+
+        /// <summary>
+        /// Получить все различные карты игрока. Get all various cards the player
+        /// </summary>
+        /// <param name="i">Текущий игрок. Current Player</param>
+        public string[] GetCardsYouCanAsk()
+        {
+            return PlayersCards[CurrentPlayer].GroupBy(x => x).Select(x => x.Key).ToArray();
+        }
+        /// <summary>
+        /// Получить индексы игроков у которых можно спросить. Get the index of the players you can ask
+        /// </summary>
+        /// <param name="i">Номер текущего игрока. number current player</param>
+        public int[] GetIndPlayers()
+        {
+            List<int> insPlayers = new List<int>();
+            for (int j = 0; j < CountPlayer; j++)
+            {
+                if (!CurrentPlayer.Equals(j)) 
+                {
+                    insPlayers.Add(j);
+                }
+            }
+            return insPlayers.ToArray();
+        }
+
 
 
         /// <summary>

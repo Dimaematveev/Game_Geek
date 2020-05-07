@@ -79,7 +79,8 @@ namespace CardGame_GoFish.Cons
             {
                 for (int i = 0; i < game.CountPlayer; i++)
                 {
-                    OneMove(game.PlayersScore, game.PlayersCards, i, game.Pool);
+                    game.CurrentPlayer = i;
+                    OneMove(game,game.PlayersScore, game.PlayersCards, game.Pool);
                 }
             }
             #endregion
@@ -109,37 +110,35 @@ namespace CardGame_GoFish.Cons
         /// <summary>
         /// Один ход. One move
         /// </summary>
-        /// <param name="playersScore">Счет игроков. </param>
-        /// <param name="playersCards"> Карты игроков</param>
-        /// <param name="i">Номер текущего игрока</param>
-        /// <param name="pool">Бассейн</param>
-        private static void OneMove(int[] playersScore, List<string>[] playersCards, int i, List<string> pool)
+        /// <param name="game">игра </param>
+        private static void OneMove(Game game)
         {
-            Console.WriteLine($"Ход {i} Игрока!");
+            
+            Console.WriteLine($"Ход {game.CurrentPlayer} Игрока!");
             //ход остаётся у игрока?. is Player Has Move
             bool isPlayerHasMove = false;
             string asksThatCard;
             int indPlayer;
-            if (playersCards[i].Count!=0)
+            if (game.PlayersCards[game.CurrentPlayer].Count!=0)
             {
-                asksThatCard = GetCardAsk(playersCards[i]);
-                indPlayer = GetIndPlayer(playersCards.Length, i);
+                asksThatCard = GetCardAsk(game);
+                indPlayer = GetIndPlayer(game);
             }
             else
             {
                 Console.WriteLine("Вы не имеете карт, поэтому берете карту из бассейна");//You do not have a card, so take card from the pool
-                indPlayer = i;
+                indPlayer = -1;
                 asksThatCard = "-";
             }
 
 
             //Если такая карта имеется у другого игрока. If such a card is have to another player.
-            if (playersCards[indPlayer].Contains(asksThatCard))
+            if (game.PlayersCards[indPlayer].Contains(asksThatCard))
             {
                 Console.WriteLine($"У игрока {indPlayer} имеется такая карта.");// Player indPlayer have such a card
                 //Передача всех карт
-                playersCards[i].AddRange(playersCards[indPlayer].Where(x => x.Equals(asksThatCard)));
-                playersCards[indPlayer].RemoveAll(x=>x.Equals(asksThatCard));
+                game.PlayersCards[game.CurrentPlayer].AddRange(game.PlayersCards[indPlayer].Where(x => x.Equals(asksThatCard)));
+                game.PlayersCards[indPlayer].RemoveAll(x=>x.Equals(asksThatCard));
                 isPlayerHasMove = true;
             }
             //Если такой карты не имеется у другого игрока. If such a card is not have to another player.
@@ -152,116 +151,100 @@ namespace CardGame_GoFish.Cons
                 do
                 {
                     //Бассейн пуст - pool is Empty
-                    if (pool.Count==0)
+                    if (game.Pool.Count==0)
                     {
                         break;
                     }
-                    pulledCard = pool[0];
-                    pool.RemoveAt(0);
-                    playersCards[i].Add(pulledCard);
+                    pulledCard = game.Pool[0];
+                    game.Pool.RemoveAt(0);
+                    game.PlayersCards[game.CurrentPlayer].Add(pulledCard);
                     Console.WriteLine($"Вы взяли из бассейна {pulledCard} .");//You take from pool ...
                 } while (pulledCard == asksThatCard);
             }
 
 
             //Если их 4 то счет++ и сброс. if you have 4 equal card then score++ and put cards
-            foreach (var item in playersCards[i].GroupBy(x => x).Where(x => x.Count() == 4))
+            foreach (var item in game.PlayersCards[game.CurrentPlayer].GroupBy(x => x).Where(x => x.Count() == 4))
             {
-                playersScore[i]++;
-                Console.WriteLine($"Вы имеете 4 одинаковых карты {item.Key}. Теперь ваш счет {playersScore[i]}");//if you have 4 equal card ... Now you score
-                playersCards[i].RemoveAll(x => x.Equals(item.Key));
+                game.PlayersScore[game.CurrentPlayer]++;
+                Console.WriteLine($"Вы имеете 4 одинаковых карты {item.Key}. Теперь ваш счет {game.PlayersScore[game.CurrentPlayer]}");//if you have 4 equal card ... Now you score
+                game.PlayersCards[game.CurrentPlayer].RemoveAll(x => x.Equals(item.Key));
             } 
            
 
             Console.WriteLine($"Имеете Карты :");//Have cards
             Console.Write("\t");
-            for (int j = 0; j < playersCards[i].Count; j++)
+            for (int j = 0; j < game.PlayersCards[game.CurrentPlayer].Count; j++)
             {
-                Console.Write($"{playersCards[i][j]}, ");
+                Console.Write($"{game.PlayersCards[game.CurrentPlayer][j]}, ");
             }
             Console.WriteLine();
 
             if (isPlayerHasMove)
             {
-                OneMove(playersScore, playersCards, i, pool);
+                OneMove(game);
             }
 
         }
 
         /// <summary>
-        /// Получить индекс игрока у которого будем спрашивать. Get the index of the player we will ask
+        /// Поиск в перечислении
         /// </summary>
-        /// <param name="countPlayer">Количество игроков</param>
-        /// <param name="i">Номер текущего игрока</param>
-        private static int GetIndPlayer(int countPlayer, int i)
+        /// <typeparam name="T"> Тип вывода и перечисления </typeparam>
+        /// <param name="enumerable"> перечисление в котором будет вестись поиск</param>
+        /// <param name="mess1"> сообщение в начале. Какие элементы можно выбрать</param>
+        /// <param name="messError"> Сообщение о ошибке</param>
+        /// <returns>найденное в перечислении</returns>
+        private static T FindToEnumerable<T>(IEnumerable<T> enumerable, string mess1, string messError)
         {
-            Console.WriteLine("Напишите номер игрока у которого хотите спросить из:");// Write number of the player you want to ask 
-            Console.Write("\t");
-            for (int j = 0; j < countPlayer; j++)
+            Console.WriteLine($"{mess1}:");
+            Console.Write($"\t");
+            foreach (var item in enumerable)
             {
-                if (i != j)
-                {
-                    Console.Write($"{j}, ");
-                }
+                Console.Write($"{item}, ");
             }
             Console.WriteLine();
             Console.WriteLine();
             //Индекс игрока у которого спрашивается карта. Index of the player you want to ask the card
-            int indPlayer = -1;
+            //Карту которую спрашивает игрок.             The card that the player asks
+            T IndPlayerCardAsk;
             while (true)
             {
-                if (int.TryParse(Console.ReadLine(), out indPlayer))
+                string rdl = Console.ReadLine().Trim();
+                var k = enumerable.Where(x => x.ToString().Equals(rdl));
+                if (k.Count() != 0)
                 {
-                    if (indPlayer == i)
-                    {
-                        Console.WriteLine("Вы не можете спросить у себя!!! Введите еще раз!!");//You can not ask yourself. Repeat  please
-                        continue;
-                    }
-                    if (indPlayer < 0 || indPlayer >= countPlayer)
-                    {
-                        Console.WriteLine("Нет такого игрока!!! Введите еще раз!!"); //There is no such player. Repeat  please
-                        continue;
-                    }
-
+                    IndPlayerCardAsk = k.First();
                     break;
                 }
-                Console.WriteLine("Это не число!!! Введите еще раз!!");// This is not a number. Repeat  please
+                Console.WriteLine($"{messError}");
             }
             Console.WriteLine();
-            return indPlayer;
+            return IndPlayerCardAsk;
+        }
+
+
+        /// <summary>
+        /// Получить индекс игрока у которого будем спрашивать. Get the index of the player we will ask
+        /// </summary>
+        /// <param name="i">Номер текущего игрока</param>
+        private static int GetIndPlayer(Game game)
+        {
+            string mess = "Напишите номер игрока у которого хотите спросить из:";// Write number of the player you want to ask
+            string messError = "Нет такого игрока! Введите еще раз!!";// You have not that player. Repeat  please
+            return FindToEnumerable(game.GetIndPlayers(), mess, messError);
+
         }
 
         /// <summary>
         /// Получить Карту которую будем спрашивать. Get the card we will ask
         /// </summary>
-        /// <param name="playerCards">Карты текущего игрока.  current player Cards</param>
-        private static string GetCardAsk(List<string> playerCards)
+        /// <param name="i">Номер текущего игрока</param>
+        private static string GetCardAsk(Game game)
         {
-            Console.WriteLine("Напишите карту которую хотите спросить из:");// Write the cards you want to ask 
-            Console.Write("\t");
-            //Различные карты -             Various cards
-            //TODO:Из групировки можно вытащить кол-во карт, но есть ли смысл?
-            var variousCards = playerCards.GroupBy(x => x).Select(x=>x.Key).ToList();
-            foreach (var card in variousCards)
-            {
-                Console.Write($"{card}, ");
-            }
-            Console.WriteLine();
-            Console.WriteLine();
-            //Карту которую спрашивает игрок.             The card that the player asks
-            string asksThatCard = "";
-            while (true)
-            {
-                string rdl = Console.ReadLine();
-                if (variousCards.Contains(rdl))
-                {
-                    asksThatCard = rdl;
-                    break;
-                }
-                Console.WriteLine("Нет такой карты у вас! Введите еще раз!!");// You have not that card
-            }
-            Console.WriteLine();
-            return asksThatCard;
+            string mess = "Напишите карту которую хотите спросить из:";// Write the cards you want to ask
+            string messError = "Нет такой карты у вас! Введите еще раз!!";// You have not that card
+            return FindToEnumerable(game.GetCardsYouCanAsk(), mess, messError);
         }
 
         
