@@ -51,5 +51,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CardGame_GoFish.BL\CardGame_GoFish.BL.csproj">
+      <Project>{1177fdc4-efd8-4e3a-bba4-d6bb97230d56}</Project>
+      <Name>CardGame_GoFish.BL</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

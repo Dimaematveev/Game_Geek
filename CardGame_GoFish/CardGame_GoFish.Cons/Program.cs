@@ -10,7 +10,8 @@ namespace CardGame_GoFish.Cons
     {
         static void Main()
         {
-            Program1_WorkVersion.Main1();
+            //Program1_WorkVersion.Main1();
+            Program2.Main1();
         }
 
         

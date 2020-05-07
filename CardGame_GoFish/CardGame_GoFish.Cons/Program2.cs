@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CardGame_GoFish.BL;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,87 +11,51 @@ namespace CardGame_GoFish.Cons
     {
         static public void Main1()
         {
+            Game game = new Game();
+            
             #region Создал Достоинства карт. Create Cards Ranks
-            //Достоинства карт - Cards Ranks
-            string[] cardsRanks = new string[13] { "2", "3", "4", "5", "6", "7", "8", "9", "10", "V", "D", "K", "T" };
             Console.WriteLine("Достоинства карт:");
             Console.Write("\t");
-            for (int i = 0; i < cardsRanks.Length; i++)
+            for (int i = 0; i < game.CardsRanks.Length; i++)
             {
-                Console.Write($"{i}-{cardsRanks[i]}; ");
+                Console.Write($"{i}-{game.CardsRanks[i]}; ");
             }
             Console.WriteLine();
             #endregion
-
+            
             #region Создал Колоду карт, не использовал масти. Create deck of Cards, but not use suits
-            //Колода карт - deck Of Cards
-            List<string> deckOfCards = new List<string>();
-            foreach (var item in cardsRanks)
-            {
-                for (int i = 0; i < 4; i++)
-                {
-                    deckOfCards.Add(item);
-                }
-            }
             Console.WriteLine("Колода:");
             Console.Write("\t");
-            for (int i = 0; i < deckOfCards.Count; i++)
+            for (int i = 0; i < game.DeckOfCards.Count; i++)
             {
-                Console.Write($"{deckOfCards[i]}, ");
+                Console.Write($"{game.DeckOfCards[i]}, ");
             }
             Console.WriteLine();
             #endregion
 
             #region Создал Бассейн откуда игроки будут брать карты, это перемешанная колода. Create pool, where players take card. Pool is shuffle deck of cards
             //Бассейн - pool
-            List<string> pool = ShuffleADeckOfCards(deckOfCards);
             Console.WriteLine("Бассейн:");
             Console.Write("\t");
-            for (int i = 0; i < pool.Count; i++)
+            for (int i = 0; i < game.Pool.Count; i++)
             {
-                Console.Write($"{pool[i]}, ");
+                Console.Write($"{game.Pool[i]}, ");
             }
             Console.WriteLine();
             #endregion
 
             #region Игроки с первоначальным кол-вом карт, и вывод оставшегося бассейна, Счет каждого игрока. Players with the original number of cards, and withdrawal of the remaining pool.  each player’s score
             //Кол-во игроков -  count Player
-            int countPlayer = 2;
-            //Кол-во карт - count Card
-            int countCard = 7;
-            if (countPlayer >= 5)
-            {
-                countCard = 5;
-            }
-
-            //Счет игроков - players Score
-            int[] playersScore = new int[countPlayer];
-
-            // Карты игроков - players Cards
-            List<string>[] playersCards = new List<string>[countPlayer];
-            for (int i = 0; i < countPlayer; i++)
-            {
-                playersCards[i] = new List<string>();
-                playersScore[i] = 0;
-            }
-
-            for (int i = 0; i < countCard; i++) 
-            {
-                for (int j = 0; j < countPlayer; j++) 
-                {
-                    playersCards[j].Add(pool[0]);
-                    pool.RemoveAt(0);
-                }
-            }
+            game.AddCountPlayer(2);
 
             Console.WriteLine($"Карты у игроков:"); //Cards of players
-            for (int i = 0; i < countPlayer; i++)
+            for (int i = 0; i < game.CountPlayer; i++)
             {
                 Console.WriteLine($"\tИгрок {i} Имеет карты:"); //Player i have cards
                 Console.Write("\t");
-                for (int j = 0; j < playersCards[i].Count; j++)
+                for (int j = 0; j < game.PlayersCards[i].Count; j++)
                 {
-                    Console.Write($"{playersCards[i][j]}, ");
+                    Console.Write($"{game.PlayersCards[i][j]}, ");
                 }
                 Console.WriteLine();
             }
@@ -98,38 +63,30 @@ namespace CardGame_GoFish.Cons
 
             Console.WriteLine("Оставшийся Бассейн:"); // out pool
             Console.Write("\t");
-            for (int i = 0; i < pool.Count; i++)
+            for (int i = 0; i < game.Pool.Count; i++)
             {
-                Console.Write($"{pool[i]}, ");
+                Console.Write($"{game.Pool[i]}, ");
             }
             Console.WriteLine();
             #endregion
 
             #region Первоначальная проверка На 4 одинаковые карты. Initial  check for 4 identical card
-            for (int i = 0; i < countPlayer; i++)
-            {
-                foreach (var item in playersCards[i].GroupBy(x => x).Where(x => x.Count() == 4))
-                {
-                    playersScore[i]++;
-                    playersCards[i].RemoveAll(x=>x.Equals(item.Key));
-                        
-                }
-            }
+            game.CheckFor4EqualCardAllPlayer();
             #endregion
 
             #region ходы игроков. Move player
-            while (playersScore.Sum()<13)
+            while (game.PlayersScore.Sum()<13)
             {
-                for (int i = 0; i < countPlayer; i++)
+                for (int i = 0; i < game.CountPlayer; i++)
                 {
-                    OneMove(playersScore, playersCards, i, pool);
+                    OneMove(game.PlayersScore, game.PlayersCards, i, game.Pool);
                 }
             }
             #endregion
 
             #region Победа. win
-            int maxScore = playersScore.Max();
-            var win = playersScore.Where(x => x.Equals(maxScore));
+            int maxScore = game.PlayersScore.Max();
+            var win = game.PlayersScore.Where(x => x.Equals(maxScore));
             if (win.Count() > 1) 
             {
                 Console.WriteLine("Победу разделили:");//Victory shared
@@ -140,6 +97,7 @@ namespace CardGame_GoFish.Cons
             }
             foreach (var item in win)
             {
+                //TODO: проблема не тот игрок выводится
                 Console.WriteLine($"\tИгрок {item} со счетом {maxScore}!"); //Player item with score maxScore
             }
             
@@ -306,24 +264,6 @@ namespace CardGame_GoFish.Cons
             return asksThatCard;
         }
 
-        /// <summary>
-        /// Перетасовка колоды карт. Входящая колода остается неизменной. 
-        /// Shuffling a deck of cards.The incoming deck remains unchanged.
-        /// </summary>
-        /// <param name="deck">Колода</param>
-        /// <returns>Вывод перетасованной колоды.</returns>
-        private static List<string> ShuffleADeckOfCards(List<string> deck)
-        {
-            Random rnd = new Random();
-            var newDeck = new List<string>();
-            newDeck.AddRange(deck);
-            for (int i = deck.Count; i > 0; i--)
-            {
-                int ind = rnd.Next(0, i);
-                newDeck.Add(newDeck[ind]);
-                newDeck.RemoveAt(ind);
-            }
-           return newDeck;
-        }
+        
     }
 }
