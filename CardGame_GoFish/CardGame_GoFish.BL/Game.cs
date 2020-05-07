@@ -91,19 +91,19 @@ namespace CardGame_GoFish.BL
         /// </summary>
         /// <param name="firstPlayer">Кто первый ходит. Who is the first to walk. </param>
         /// <returns>Выводит всех игроков с максимальным счетом. Outer all players with max count.</returns>
-        public List<int> BeginGame(int firstPlayer)
+        public List<int> BeginGame(int firstPlayer, Func<Game, string> fAsksThatCard, Func<Game, int> fIndPlayer)
         {
             for (int i = firstPlayer; i < CountPlayer; i++)
             {
                 CurrentPlayer = i;
-                OneMove();
+                OneMove(fAsksThatCard, fIndPlayer);
             }
             while (PlayersScore.Sum() < 13)
             {
                 for (int i = 0; i < CountPlayer; i++)
                 {
                     CurrentPlayer = i;
-                    OneMove();
+                    OneMove(fAsksThatCard, fIndPlayer);
                 }
             }
 
@@ -133,11 +133,66 @@ namespace CardGame_GoFish.BL
         /// <summary>
         /// Один ход. One move
         /// </summary>
-        /// <param name="i">Номер текущего игрока</param>
-        private void OneMove()
+        private void OneMove(Func<Game,string> fAsksThatCard, Func<Game, int> fIndPlayer)
         {
+            Console.WriteLine($"Ход {CurrentPlayer} Игрока!");
+            //ход остаётся у игрока?. is Player Has Move
+            bool isPlayerHasMove = false;
+            var asksThatCard = fAsksThatCard(this);
+            var indPlayer = fIndPlayer(this);
+            
+            //Если такая карта имеется у другого игрока. If such a card is have to another player.
+            if (PlayersCards[indPlayer].Contains(asksThatCard))
+            {
+                Console.WriteLine($"У игрока {indPlayer} имеется такая карта.");// Player indPlayer have such a card
+                //Передача всех карт
+                PlayersCards[CurrentPlayer].AddRange(PlayersCards[indPlayer].Where(x => x.Equals(asksThatCard)));
+                PlayersCards[indPlayer].RemoveAll(x => x.Equals(asksThatCard));
+                isPlayerHasMove = true;
+            }
+            //Если такой карты не имеется у другого игрока. If such a card is not have to another player.
+            else
+            {
+                Console.WriteLine($"У игрока {indPlayer} нет такой карты."); // Player indPlayer not have such a card
+                string pulledCard;
+                //Вытаскиваем из бассейна карту, если она равна той что нам надо вытаскиваем еще раз и т.д. 
+                //We take out the card from the pool, if it is equal to the one that we need to take out again
+                do
+                {
+                    //Бассейн пуст - pool is Empty
+                    if (Pool.Count == 0)
+                    {
+                        break;
+                    }
+                    pulledCard = Pool[0];
+                    Pool.RemoveAt(0);
+                    PlayersCards[CurrentPlayer].Add(pulledCard);
+                    Console.WriteLine($"Вы взяли из бассейна {pulledCard} .");//You take from pool ...
+                } while (pulledCard == asksThatCard);
+            }
 
-            throw new NotImplementedException();
+
+            //Если их 4 то счет++ и сброс. if you have 4 equal card then score++ and put cards
+            foreach (var item in PlayersCards[CurrentPlayer].GroupBy(x => x).Where(x => x.Count() == 4))
+            {
+                PlayersScore[CurrentPlayer]++;
+                Console.WriteLine($"Вы имеете 4 одинаковых карты {item.Key}. Теперь ваш счет {PlayersScore[CurrentPlayer]}");//if you have 4 equal card ... Now you score
+                PlayersCards[CurrentPlayer].RemoveAll(x => x.Equals(item.Key));
+            }
+
+
+            Console.WriteLine($"Имеете Карты :");//Have cards
+            Console.Write("\t");
+            for (int j = 0; j < PlayersCards[CurrentPlayer].Count; j++)
+            {
+                Console.Write($"{PlayersCards[CurrentPlayer][j]}, ");
+            }
+            Console.WriteLine();
+
+            if (isPlayerHasMove)
+            {
+                OneMove(fAsksThatCard, fIndPlayer);
+            }
         }
 
         /// <summary>

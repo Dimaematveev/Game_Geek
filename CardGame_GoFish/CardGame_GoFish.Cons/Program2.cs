@@ -75,20 +75,11 @@ namespace CardGame_GoFish.Cons
             #endregion
 
             #region ходы игроков. Move player
-            while (game.PlayersScore.Sum()<13)
-            {
-                for (int i = 0; i < game.CountPlayer; i++)
-                {
-                    game.CurrentPlayer = i;
-                    OneMove(game);
-                }
-            }
+            var wins = game.BeginGame(0, GetCardAsk, GetIndPlayer);
             #endregion
 
             #region Победа. win
-            int maxScore = game.PlayersScore.Max();
-            var win = game.PlayersScore.Where(x => x.Equals(maxScore));
-            if (win.Count() > 1) 
+            if (wins.Count() > 1) 
             {
                 Console.WriteLine("Победу разделили:");//Victory shared
             }
@@ -96,10 +87,10 @@ namespace CardGame_GoFish.Cons
             {
                 Console.WriteLine("Выиграл:");//won
             }
-            foreach (var item in win)
+            foreach (var item in wins)
             {
                 //TODO: проблема не тот игрок выводится
-                Console.WriteLine($"\tИгрок {item} со счетом {maxScore}!"); //Player item with score maxScore
+                Console.WriteLine($"\tИгрок {item} со счетом {"------"}!"); //Player item with score maxScore
             }
             
             #endregion
@@ -107,85 +98,7 @@ namespace CardGame_GoFish.Cons
             Console.ReadKey();
         }
 
-        /// <summary>
-        /// Один ход. One move
-        /// </summary>
-        /// <param name="game">игра </param>
-        private static void OneMove(Game game)
-        {
-            
-            Console.WriteLine($"Ход {game.CurrentPlayer} Игрока!");
-            //ход остаётся у игрока?. is Player Has Move
-            bool isPlayerHasMove = false;
-            string asksThatCard;
-            int indPlayer;
-            if (game.PlayersCards[game.CurrentPlayer].Count!=0)
-            {
-                asksThatCard = GetCardAsk(game);
-                indPlayer = GetIndPlayer(game);
-            }
-            else
-            {
-                Console.WriteLine("Вы не имеете карт, поэтому берете карту из бассейна");//You do not have a card, so take card from the pool
-                indPlayer = -1;
-                asksThatCard = "-";
-            }
-
-
-            //Если такая карта имеется у другого игрока. If such a card is have to another player.
-            if (game.PlayersCards[indPlayer].Contains(asksThatCard))
-            {
-                Console.WriteLine($"У игрока {indPlayer} имеется такая карта.");// Player indPlayer have such a card
-                //Передача всех карт
-                game.PlayersCards[game.CurrentPlayer].AddRange(game.PlayersCards[indPlayer].Where(x => x.Equals(asksThatCard)));
-                game.PlayersCards[indPlayer].RemoveAll(x=>x.Equals(asksThatCard));
-                isPlayerHasMove = true;
-            }
-            //Если такой карты не имеется у другого игрока. If such a card is not have to another player.
-            else
-            {
-                Console.WriteLine($"У игрока {indPlayer} нет такой карты."); // Player indPlayer not have such a card
-                string pulledCard;
-                //Вытаскиваем из бассейна карту, если она равна той что нам надо вытаскиваем еще раз и т.д. 
-                //We take out the card from the pool, if it is equal to the one that we need to take out again
-                do
-                {
-                    //Бассейн пуст - pool is Empty
-                    if (game.Pool.Count==0)
-                    {
-                        break;
-                    }
-                    pulledCard = game.Pool[0];
-                    game.Pool.RemoveAt(0);
-                    game.PlayersCards[game.CurrentPlayer].Add(pulledCard);
-                    Console.WriteLine($"Вы взяли из бассейна {pulledCard} .");//You take from pool ...
-                } while (pulledCard == asksThatCard);
-            }
-
-
-            //Если их 4 то счет++ и сброс. if you have 4 equal card then score++ and put cards
-            foreach (var item in game.PlayersCards[game.CurrentPlayer].GroupBy(x => x).Where(x => x.Count() == 4))
-            {
-                game.PlayersScore[game.CurrentPlayer]++;
-                Console.WriteLine($"Вы имеете 4 одинаковых карты {item.Key}. Теперь ваш счет {game.PlayersScore[game.CurrentPlayer]}");//if you have 4 equal card ... Now you score
-                game.PlayersCards[game.CurrentPlayer].RemoveAll(x => x.Equals(item.Key));
-            } 
-           
-
-            Console.WriteLine($"Имеете Карты :");//Have cards
-            Console.Write("\t");
-            for (int j = 0; j < game.PlayersCards[game.CurrentPlayer].Count; j++)
-            {
-                Console.Write($"{game.PlayersCards[game.CurrentPlayer][j]}, ");
-            }
-            Console.WriteLine();
-
-            if (isPlayerHasMove)
-            {
-                OneMove(game);
-            }
-
-        }
+        
 
         /// <summary>
         /// Поиск в перечислении
@@ -197,6 +110,10 @@ namespace CardGame_GoFish.Cons
         /// <returns>найденное в перечислении</returns>
         private static T FindToEnumerable<T>(IEnumerable<T> enumerable, string mess1, string messError)
         {
+            if (enumerable.Count()==0)
+            {
+                return default(T);
+            }
             Console.WriteLine($"{mess1}:");
             Console.Write($"\t");
             foreach (var item in enumerable)
